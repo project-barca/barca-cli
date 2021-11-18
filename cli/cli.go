@@ -3,17 +3,11 @@ package cli
 import (
 	"bufio"
 	"errors"
-	"fmt"
-	"github.com/schollz/progressbar/v3"
 	"github.com/urfave/cli/v2"
 	"gopkg.in/gookit/color.v1"
 	"io"
 	"log"
-	"net"
-	"net/http"
 	"os"
-	"syscall"
-	"time"
 )
 
 func GenerateWin() {
@@ -113,7 +107,7 @@ func GenerateWin() {
 						},
 					},
 				},
-			}
+			},
 		},
 	}
 

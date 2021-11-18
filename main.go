@@ -2,7 +2,6 @@ package main
 
 import (
 	"barca-cli/cli"
-	"fmt"
 	"runtime"
 )
 
