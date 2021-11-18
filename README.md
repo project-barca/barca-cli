@@ -38,13 +38,9 @@
     ·
     <a href="/docs/lang/readme_kr.md">한국어</a>
     .
-    <a href="/docs/lang/readme_ro.md">Română</a>
-    .
     <a href="/docs/lang/readme_uk.md">Українська</a>
     .
     <a href="/docs/lang/readme_hi.md">हिंदी</a>
-    .
-    <a href="/docs/lang/readme_th.md">ไทย</a>
     .
     <a href="/docs/lang/readme_vi.md">Tiếng Việt</a>
     .
@@ -73,9 +69,6 @@ Example:
 go run main.go --help
 ```
 
-Output:
-![alt text](docs/assets/output/cli-help.png)
-
 
 
 To build some HTTP web server, we will mention the Framework Gorilla Mux and name of your project with the following command
@@ -88,6 +81,8 @@ Example:
 ```sh
 go run main.go init api my-project
 ```
+
+<br>
 
 <p align="center">
   <img align="center" alt="barca-cli" src="docs/assets/gif/barca-cli-1.gif" />
