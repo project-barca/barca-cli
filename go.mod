@@ -3,9 +3,10 @@ module github.com/project-barca/barca-cli
 go 1.16
 
 require (
-	github.com/BurntSushi/toml v0.4.1//
+	github.com/BurntSushi/toml v0.4.1 //
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/pterm/pterm v0.12.33 // indirect
 	github.com/schollz/progressbar/v3 v3.8.3 // indirect
 	github.com/shirou/gopsutil v3.21.9+incompatible // indirect
 	github.com/soheilhy/args v0.0.0-20150720134047-6bcf4c78e87e // indirect
