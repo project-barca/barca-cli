@@ -53,17 +53,20 @@
 
   **CLI** (Command-Line Interface) é um ambiente onde os usuários podem inserir linhas de comando para executar tarefas em sistemas operacionais ou em trabalhos de programação.
 
-
+<br>
+<br>
+<br>
 
 Baixe todos módulos necessário no projeto:
 
 ```sh
 go mod download
 ```
-
+<br>
+<br>
 
 Execute o comando `go run main.go` com o argumento `--help` para listar todos comandos e flags da CLI
-
+<br>
 Exemplo:
 
 ```sh
@@ -71,17 +74,21 @@ go run main.go --help
 ```
 
 
+<br>
+<br>
 
 Para construir um Servidor Web HTTP, nós vamos citar os argumentos  `init` e `api` para iniciar uma API Rest simples.
 
 Exemplo:
+<br>
 
 ```sh
 go run main.go init api <seu-projeto>
 ```
 
 <br>
+<br>
 
 <p align="center">
-  <img align="center" alt="barca-cli" src="docs/assets/gif/barca-cli-1.gif" />
+  <img align="center" alt="barca-cli" src="../assets/gif/barca-cli-1.gif" />
 </p>

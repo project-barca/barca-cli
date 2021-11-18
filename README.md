@@ -40,10 +40,6 @@
     .
     <a href="/docs/lang/readme_uk.md">Українська</a>
     .
-    <a href="/docs/lang/readme_hi.md">हिंदी</a>
-    .
-    <a href="/docs/lang/readme_vi.md">Tiếng Việt</a>
-    .
     <a href="/docs/lang/readme_pt-BR.md">Português Brasileiro</a>
     .
   </p>
@@ -53,35 +49,40 @@
 
   **CLI** (Command-Line Interface) is an environment where users can enter command lines to perform tasks in operating systems or in programming jobs.
 
-
+<br>
+<br>
+<br>
 
 Downloads all modules in the file to the local cache
 
 ```sh
 go mod download
 ```
-
+<br>
+<br>
 
 Run `go run main.go` with argument `--help` to list all CLI commands and flags
+<br>
 
 Example: 
 ```sh
 go run main.go --help
 ```
 
+<br>
+<br>
 
 
-To build some HTTP web server, we will mention the Framework Gorilla Mux and name of your project with the following command
+To build an HTTP Web Server, let's mention `init` and `api` arguments to start a simple Rest API.
+<br>
+Example:
 
 ```sh
 go run main.go init api <project-name>
 ```
 
-Example: 
-```sh
-go run main.go init api my-project
-```
 
+<br>
 <br>
 
 <p align="center">
