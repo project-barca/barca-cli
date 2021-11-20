@@ -92,3 +92,24 @@ go run main.go init api <seu-projeto>
 <p align="center">
   <img align="center" alt="barca-cli" src="../assets/gif/barca-cli-1.gif" />
 </p>
+
+<br>
+<br>
+
+#### Especificando Idioma
+
+
+Você pode traduzir as mensagens que a ferramenta **barca-cli** retorna especificando por uma flag `--lang`
+
+Exemplo:
+
+```sh
+go run main.go --lang francais init api <project-name>
+```
+
+<br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli" src="../assets/gif/barca-cli-2.gif" />
+</p>
