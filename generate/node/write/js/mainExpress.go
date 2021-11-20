@@ -1,12 +1,13 @@
 package write
 
 import (
+	dependencies "barca-cli/generate/node/dependencies"
 	"fmt"
 	"log"
 	"os"
 )
 
-func ServerExpress(port string, directory string) {
+func ServerExpress(port string, directory string, lang string) {
 	_, errorPath := os.Stat("./" + directory)
 
 	if os.IsNotExist(errorPath) {
@@ -43,7 +44,7 @@ func ServerExpress(port string, directory string) {
 		if err3 != nil {
 			log.Fatal(err3)
 		}
-
+		dependencies.PackageJson(directory, "express.js", lang)
 		fmt.Println("done")
 
 	}
