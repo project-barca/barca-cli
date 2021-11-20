@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 )
 
-func ServerExpress(port int, directory string) {
+func ServerExpress(port string, directory string) {
 	_, errorPath := os.Stat("./" + directory)
 
 	if os.IsNotExist(errorPath) {
@@ -34,7 +33,7 @@ func ServerExpress(port int, directory string) {
 			log.Fatal(err2)
 		}
 
-		line2 := "\napp = express(" + strconv.Itoa(port) + ")\n"
+		line2 := "\napp = express(" + port + ")\n"
 		data2 := []byte(line2)
 
 		var idx int64 = int64(len(data))
