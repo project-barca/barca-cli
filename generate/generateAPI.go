@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"github.com/nicksnyder/go-i18n/v2/i18n"
+	write "github.com/project-barca/barca-cli/generate/node/write/js"
 	"github.com/pterm/pterm"
 	"golang.org/x/text/language"
 )
@@ -17,7 +18,7 @@ import (
 var localizer *i18n.Localizer
 var bundle *i18n.Bundle
 
-func API(lang string, directory string, projectName string) {
+func API(lang string, directory string, framework string, projectName string) {
 	// Configurações para internacionalização do software
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
@@ -36,87 +37,101 @@ func API(lang string, directory string, projectName string) {
 		localizer = i18n.NewLocalizer(bundle, language.BrazilianPortuguese.String(), language.English.String(), language.French.String())
 	}
 
-	if directory == "" {
-	}
-	server, err := os.Open("frameworks/http/gorilla/gorilla-mux.go")
-	if err != nil {
-		panic(err)
-	}
-	defer func() {
-		if err := server.Close(); err != nil {
-			panic(err)
+	switch framework {
+	case "express":
+		if directory == "" {
+
 		}
-	}()
-	r := bufio.NewReader(server)
+		write.ServerExpress(4200, directory)
+	case "echo":
 
-	_, errorPath := os.Stat("./" + directory)
-
-	localizeConfigWelcome := i18n.LocalizeConfig{
-		MessageID: "generate_api",
-	}
-	localizeConfigCreateDirectory := i18n.LocalizeConfig{
-		MessageID: "create_directory_api",
-	}
-	localizeConfigErrorDirectory := i18n.LocalizeConfig{
-		MessageID: "error_directory_api",
-	}
-	localizeConfigSuccessProject := i18n.LocalizeConfig{
-		MessageID: "create_api_success",
-	}
-	resultWelcome, _ := localizer.Localize(&localizeConfigWelcome)
-	resultDir, _ := localizer.Localize(&localizeConfigCreateDirectory)
-	resultErrorDir, _ := localizer.Localize(&localizeConfigErrorDirectory)
-	resultProjectSuccess, _ := localizer.Localize(&localizeConfigSuccessProject)
-
-	if os.IsNotExist(errorPath) {
-
-		spinnerSuccess, _ := pterm.DefaultSpinner.Start(resultWelcome)
-		time.Sleep(time.Second * 2)
-		spinnerSuccess.Success()
-
-		errDir := os.Mkdir("./"+directory, 0777)
-		if errDir != nil {
-			log.Fatal(errorPath)
-			return
+	case "gorilla":
+		if directory == "" {
 		}
-		currentServer, err := os.Create(projectName + "./main.go")
-
-		spinnerSuccessDir, _ := pterm.DefaultSpinner.Start(resultDir)
-		time.Sleep(time.Second * 2)
-		spinnerSuccessDir.Success(resultProjectSuccess)
-		time.Sleep(time.Second * 1)
-		spinnerSuccessDir.Success("OK")
-
+		server, err := os.Open("frameworks/http/gorilla/gorilla-mux.go")
 		if err != nil {
 			panic(err)
 		}
 		defer func() {
-			if err := currentServer.Close(); err != nil {
+			if err := server.Close(); err != nil {
 				panic(err)
 			}
 		}()
+		r := bufio.NewReader(server)
 
-		w := bufio.NewWriter(currentServer)
+		_, errorPath := os.Stat("./" + directory)
 
-		buf := make([]byte, 1024)
-		for {
-			n, err := r.Read(buf)
-			if err != nil && err != io.EOF {
+		localizeConfigWelcome := i18n.LocalizeConfig{
+			MessageID: "generate_api",
+		}
+		localizeConfigCreateDirectory := i18n.LocalizeConfig{
+			MessageID: "create_directory_api",
+		}
+		localizeConfigErrorDirectory := i18n.LocalizeConfig{
+			MessageID: "error_directory_api",
+		}
+		localizeConfigSuccessProject := i18n.LocalizeConfig{
+			MessageID: "create_api_success",
+		}
+		resultWelcome, _ := localizer.Localize(&localizeConfigWelcome)
+		resultDir, _ := localizer.Localize(&localizeConfigCreateDirectory)
+		resultErrorDir, _ := localizer.Localize(&localizeConfigErrorDirectory)
+		resultProjectSuccess, _ := localizer.Localize(&localizeConfigSuccessProject)
+
+		if os.IsNotExist(errorPath) {
+
+			spinnerSuccess, _ := pterm.DefaultSpinner.Start(resultWelcome)
+			time.Sleep(time.Second * 2)
+			spinnerSuccess.Success()
+
+			errDir := os.Mkdir("./"+directory, 0777)
+			if errDir != nil {
+				log.Fatal(errorPath)
+				return
+			}
+			currentServer, err := os.Create(projectName + "./main.go")
+
+			spinnerSuccessDir, _ := pterm.DefaultSpinner.Start(resultDir)
+			time.Sleep(time.Second * 2)
+			spinnerSuccessDir.Success(resultProjectSuccess)
+			time.Sleep(time.Second * 1)
+			spinnerSuccessDir.Success("OK")
+
+			if err != nil {
 				panic(err)
 			}
-			if n == 0 {
-				break
+			defer func() {
+				if err := currentServer.Close(); err != nil {
+					panic(err)
+				}
+			}()
+
+			w := bufio.NewWriter(currentServer)
+
+			buf := make([]byte, 1024)
+			for {
+				n, err := r.Read(buf)
+				if err != nil && err != io.EOF {
+					panic(err)
+				}
+				if n == 0 {
+					break
+				}
+				if _, err := w.Write(buf[:n]); err != nil {
+					panic(err)
+				}
 			}
-			if _, err := w.Write(buf[:n]); err != nil {
+
+			if err = w.Flush(); err != nil {
 				panic(err)
 			}
+		} else {
+			pterm.Error.Println(resultErrorDir)
+
 		}
 
-		if err = w.Flush(); err != nil {
-			panic(err)
-		}
-	} else {
-		pterm.Error.Println(resultErrorDir)
-
+	default:
+		localizer = i18n.NewLocalizer(bundle, language.BrazilianPortuguese.String(), language.English.String(), language.French.String())
 	}
+
 }
