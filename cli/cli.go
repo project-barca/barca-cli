@@ -4,14 +4,14 @@ import (
 	"log"
 	"os"
 
-	"barca-cli/generate"
-
+	"github.com/project-barca/barca-cli/generate"
 	"github.com/urfave/cli/v2"
 )
 
 func GenerateWin() {
 	nameProject := os.Args[len(os.Args)-1]
 	var language string
+	var framework string
 
 	app := &cli.App{
 		Name:        "<seu-projeto>",
@@ -23,6 +23,12 @@ func GenerateWin() {
 				Value:       "portugues-brasileiro",
 				Usage:       "Idioma da exibição",
 				Destination: &language,
+			},
+			&cli.StringFlag{
+				Name:        "framework, f",
+				Value:       "barca",
+				Usage:       "Especifíque Framework para servir sua API",
+				Destination: &framework,
 			},
 			&cli.StringFlag{
 				Name:  "config, c",
@@ -45,7 +51,8 @@ func GenerateWin() {
 						Description: "Implementar Web Server para servir endpoints",
 						Action: func(c *cli.Context) error {
 							directory := c.Args().First()
-							generate.API(language, directory, nameProject)
+							generate.API(language, directory, framework, nameProject)
+
 							return nil
 						},
 					},
