@@ -16,5 +16,6 @@ require (
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	golang.org/x/sys v0.0.0-20211025201205-69cdffdb9359 // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
+	golang.org/x/text v0.3.3 // indirect
 	gopkg.in/gookit/color.v1 v1.1.6 // indirect
 )
