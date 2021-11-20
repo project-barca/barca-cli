@@ -18,7 +18,7 @@ import (
 var localizer *i18n.Localizer
 var bundle *i18n.Bundle
 
-func API(lang string, directory string, framework string, projectName string) {
+func API(lang string, directory string, framework string, port string, projectName string) {
 	// Configurações para internacionalização do software
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
@@ -42,7 +42,7 @@ func API(lang string, directory string, framework string, projectName string) {
 		if directory == "" {
 
 		}
-		write.ServerExpress(4200, directory)
+		write.ServerExpress(port, directory)
 	case "echo":
 
 	case "gorilla":
