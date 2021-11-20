@@ -65,7 +65,7 @@ func PackageJson(project string, main string, lang string) {
 			log.Fatal(err2)
 		}
 
-		line2 := "\n   \"name\":  \"" + project + "\",\n"
+		line2 := "\n  \"name\":  \"" + project + "\",\n  \"version\":	\"1.0.0\",\n	\"main\": \"express.js\",\n  \"scripts\": {\n    \"start\": \"node express.js\"\n  },\n  \"dependencies\":  {\n    \"express\": \"~4.17.1\"\n	}\n}"
 		data2 := []byte(line2)
 
 		var idx int64 = int64(len(data))
