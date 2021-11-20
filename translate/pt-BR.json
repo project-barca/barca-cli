@@ -1,0 +1,6 @@
+{
+  "generate_api": "Iniciando Gorilla Mux API...",
+  "create_directory_api":  "Criando estrutura de pastas...",
+  "create_api_success":  "Projeto construído com sucesso!",
+  "error_directory_api":  "Já existe uma pasta com o mesmo nome do projeto que você está tentando criar"
+}

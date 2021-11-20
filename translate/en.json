@@ -1,0 +1,6 @@
+{
+  "generate_api": "Starting Gorilla Mux API...",
+  "create_directory_api":  "Creating folder structure...",
+  "create_api_success":  "Successfully built project!",
+  "error_directory_api":  "There is already a folder with the same name as the project you are trying to create..."
+}
