@@ -42,7 +42,7 @@ func API(lang string, directory string, framework string, port string, projectNa
 		if directory == "" {
 
 		}
-		write.ServerExpress(port, directory)
+		write.ServerExpress(port, directory, lang)
 	case "echo":
 
 	case "gorilla":
