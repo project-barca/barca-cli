@@ -2,16 +2,40 @@ package generate
 
 import (
 	"bufio"
+	"encoding/json"
 	"io"
 	"time"
 
 	"log"
 	"os"
 
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/pterm/pterm"
+	"golang.org/x/text/language"
 )
 
+var localizer *i18n.Localizer
+var bundle *i18n.Bundle
+
 func API(lang string, directory string, projectName string) {
+	// Configurações para internacionalização do software
+	bundle = i18n.NewBundle(language.English)
+	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
+	bundle.LoadMessageFile("translate/en.json")
+	bundle.LoadMessageFile("translate/fr.json")
+	bundle.LoadMessageFile("translate/pt-BR.json")
+
+	switch lang {
+	case "portugues-brasileiro":
+		localizer = i18n.NewLocalizer(bundle, language.BrazilianPortuguese.String(), language.English.String(), language.French.String())
+	case "english":
+		localizer = i18n.NewLocalizer(bundle, language.English.String(), language.BrazilianPortuguese.String(), language.French.String())
+	case "francais":
+		localizer = i18n.NewLocalizer(bundle, language.French.String(), language.English.String(), language.BrazilianPortuguese.String())
+	default:
+		localizer = i18n.NewLocalizer(bundle, language.BrazilianPortuguese.String(), language.English.String(), language.French.String())
+	}
+
 	if directory == "" {
 	}
 	server, err := os.Open("frameworks/http/gorilla/gorilla-mux.go")
@@ -27,24 +51,39 @@ func API(lang string, directory string, projectName string) {
 
 	_, errorPath := os.Stat("./" + directory)
 
+	localizeConfigWelcome := i18n.LocalizeConfig{
+		MessageID: "generate_api",
+	}
+	localizeConfigCreateDirectory := i18n.LocalizeConfig{
+		MessageID: "create_directory_api",
+	}
+	localizeConfigErrorDirectory := i18n.LocalizeConfig{
+		MessageID: "error_directory_api",
+	}
+	localizeConfigSuccessProject := i18n.LocalizeConfig{
+		MessageID: "create_api_success",
+	}
+	resultWelcome, _ := localizer.Localize(&localizeConfigWelcome)
+	resultDir, _ := localizer.Localize(&localizeConfigCreateDirectory)
+	resultErrorDir, _ := localizer.Localize(&localizeConfigErrorDirectory)
+	resultProjectSuccess, _ := localizer.Localize(&localizeConfigSuccessProject)
+
 	if os.IsNotExist(errorPath) {
-		spinnerSuccess, _ := pterm.DefaultSpinner.Start("Iniciando Gorilla Mux API...")
+
+		spinnerSuccess, _ := pterm.DefaultSpinner.Start(resultWelcome)
 		time.Sleep(time.Second * 2)
 		spinnerSuccess.Success()
 
 		errDir := os.Mkdir("./"+directory, 0777)
 		if errDir != nil {
 			log.Fatal(errorPath)
-			pterm.Error.Println("Não pode criar o diretório")
 			return
 		}
 		currentServer, err := os.Create(projectName + "./main.go")
 
-		spinnerSuccessDir, _ := pterm.DefaultSpinner.Start("Criando estrutura de pastas...")
+		spinnerSuccessDir, _ := pterm.DefaultSpinner.Start(resultDir)
 		time.Sleep(time.Second * 2)
-		spinnerSuccessDir.UpdateText("Projeto: " + projectName)
-		time.Sleep(time.Second * 1)
-		spinnerSuccessDir.Success("Projeto construído")
+		spinnerSuccessDir.Success(resultProjectSuccess)
 		time.Sleep(time.Second * 1)
 		spinnerSuccessDir.Success("OK")
 
@@ -77,7 +116,7 @@ func API(lang string, directory string, projectName string) {
 			panic(err)
 		}
 	} else {
-		pterm.Error.Println("Já existe uma pasta com o mesmo nome do projeto que você está tentando criar")
+		pterm.Error.Println(resultErrorDir)
 
 	}
 }
