@@ -12,6 +12,7 @@ func GenerateWin() {
 	nameProject := os.Args[len(os.Args)-1]
 	var language string
 	var framework string
+	var port string
 
 	app := &cli.App{
 		Name:        "<seu-projeto>",
@@ -29,6 +30,12 @@ func GenerateWin() {
 				Value:       "barca",
 				Usage:       "Especifíque Framework para servir sua API",
 				Destination: &framework,
+			},
+			&cli.StringFlag{
+				Name:        "port, p",
+				Value:       "4200",
+				Usage:       "Especifíque a Porta do Servidor",
+				Destination: &port,
 			},
 			&cli.StringFlag{
 				Name:  "config, c",
@@ -51,7 +58,7 @@ func GenerateWin() {
 						Description: "Implementar Web Server para servir endpoints",
 						Action: func(c *cli.Context) error {
 							directory := c.Args().First()
-							generate.API(language, directory, framework, nameProject)
+							generate.API(language, directory, framework, port, nameProject)
 
 							return nil
 						},
