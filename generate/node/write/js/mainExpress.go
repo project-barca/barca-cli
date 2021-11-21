@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 )
 
 func ServerExpress(port string, directory string, lang string) {
@@ -44,8 +45,15 @@ func ServerExpress(port string, directory string, lang string) {
 		if err3 != nil {
 			log.Fatal(err3)
 		}
-		dependencies.PackageJson(directory, "express.js", lang)
+		go dependencies.PackageJson(directory, "express.js", lang)
+
+		cmd := exec.Command("npm", "install", directory)
+		curr_wd, err := os.Getwd()
+		//cmd := exec.Command("cd", curr_wd+"/hao", "&", "npm", "run", "install")
+		stdout, err := cmd.Output()
 		fmt.Println("done")
+		fmt.Println(curr_wd)
+		fmt.Print(string(stdout))
 
 	}
 }
