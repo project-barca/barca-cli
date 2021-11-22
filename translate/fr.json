@@ -3,6 +3,10 @@
   "create_directory_api":  "Création d'une structure de dossiers...",
   "create_api_success":  "Projet construit avec succès!",
   "success_package_json":  "créé  :  package.json",
+  "success_node_modules":  "créé  :  node_modules/",
+  "success_server_express":  "créé  :  express.js",
+  "install_modules_npm":  "Installation des dépendances...",
+  "error_modules_npm":  "Erreur lors de l'installation des dépendances npm",
   "error_directory_api":  "Il existe déjà un dossier portant le même nom que le projet que vous essayez de créer...",
   "error_package_json":  "Erreur lors de la tentative d'ajout de package.json à votre projet node.js. Il n'y a probablement pas encore de projet Node.js."
 }

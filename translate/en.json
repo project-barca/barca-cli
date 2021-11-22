@@ -3,6 +3,10 @@
   "create_directory_api":  "Creating folder structure...",
   "create_api_success":  "Successfully built project!",
   "success_package_json":  "create  :  package.json",
+  "success_server_express":  "create  :  express.js",
+  "success_node_modules":  "create  :  node_modules/",
+  "install_modules_npm":  "Installing dependencies...",
+  "error_modules_npm":  "Error trying to install npm dependencies",
   "error_directory_api":  "There is already a folder with the same name as the project you are trying to create...",
   "error_package_json":  "Error trying to add package.json to your node.js project. There is probably no Node.js project yet."
 }
