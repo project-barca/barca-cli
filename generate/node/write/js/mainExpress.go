@@ -39,12 +39,20 @@ func ServerExpress(port string, directory string, lang string) {
 	localizeSuccessExpressServer := i18n.LocalizeConfig{
 		MessageID: "success_server_express",
 	}
+	localizeHelloWorld := i18n.LocalizeConfig{
+		MessageID: "hello",
+	}
 	localizeSuccessNodeModules := i18n.LocalizeConfig{
 		MessageID: "success_node_modules",
 	}
 	localizeInstallModulesNpm := i18n.LocalizeConfig{
 		MessageID: "install_modules_npm",
 	}
+	localizeMsgRunServer := i18n.LocalizeConfig{
+		MessageID: "message_express_run_server",
+	}
+	resultHelloWorld, _ := localizer.Localize(&localizeHelloWorld)
+	resultMsgRunServer, _ := localizer.Localize(&localizeMsgRunServer)
 	resultInstallNpmModules, _ := localizer.Localize(&localizeInstallModulesNpm)
 	resultExpressServer, _ := localizer.Localize(&localizeSuccessExpressServer)
 	resultNodeModules, _ := localizer.Localize(&localizeSuccessNodeModules)
@@ -75,7 +83,7 @@ func ServerExpress(port string, directory string, lang string) {
 			log.Fatal(err2)
 		}
 
-		line2 := "\napp = express(" + port + ")\n"
+		line2 := "\napp = express();\nconst port = " + port + "\n\napp.get('/', (req, res) => {\n  res.send('" + resultHelloWorld + "')\n})\n\napp.listen(port, () =>{\n  console.log(`" + resultMsgRunServer + " http://localhost:" + port + "`)\n})"
 		data2 := []byte(line2)
 
 		var idx int64 = int64(len(data))
@@ -103,10 +111,6 @@ func ServerExpress(port string, directory string, lang string) {
 		//curr_wd, err := os.Getwd()
 		//cmd := exec.Command("cd", curr_wd+"/hao", "&", "npm", "run", "install")
 		cmd.Wait()
-		stdout, err := cmd.Output()
 		pterm.Success.Println(resultNodeModules)
-		//fmt.Println(curr_wd)
-		fmt.Print(stdout)
-
 	}
 }
