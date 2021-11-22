@@ -43,6 +43,7 @@ func API(lang string, directory string, framework string, port string, projectNa
 
 		}
 		write.ServerExpress(port, directory, lang)
+		os.Remove("./installMod.bat")
 	case "echo":
 
 	case "gorilla":
