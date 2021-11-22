@@ -1,4 +1,6 @@
 {
+  "hello": "Hello world, are you using Barca CLI",
+  "message_express_run_server": "Your Express Server is Running at Address: ",
   "generate_api": "Starting Gorilla Mux API...",
   "create_directory_api":  "Creating folder structure...",
   "create_api_success":  "Successfully built project!",

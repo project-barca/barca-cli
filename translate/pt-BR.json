@@ -1,8 +1,10 @@
 {
+  "hello": "Olá, mundo, você está usando o Barca CLI",
   "generate_api": "Iniciando Gorilla Mux API...",
   "create_directory_api":  "Criando estrutura de pastas...",
   "create_api_success":  "Projeto construído com sucesso!",
   "success_package_json":  "criado  :  package.json",
+  "message_express_run_server": "Seu Servidor Express Está Sendo Executado No Endereço: ",
   "success_server_express":  "criado  :  express.js",
   "success_node_modules":  "criado  :  node_modules/",
   "install_modules_npm":  "Instalando dependências...",

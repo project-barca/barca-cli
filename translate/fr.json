@@ -1,9 +1,11 @@
 {
+  "hello": "Bonjour tout le monde, utilisez-vous Barca CLI",
   "generate_api": "Démarrage de l'API Gorilla Mux...",
   "create_directory_api":  "Création d'une structure de dossiers...",
   "create_api_success":  "Projet construit avec succès!",
   "success_package_json":  "créé  :  package.json",
   "success_node_modules":  "créé  :  node_modules/",
+  "message_express_run_server": "Votre serveur express fonctionne à l'adresse: ",
   "success_server_express":  "créé  :  express.js",
   "install_modules_npm":  "Installation des dépendances...",
   "error_modules_npm":  "Erreur lors de l'installation des dépendances npm",
