@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/project-barca/barca-cli/generate"
-	"github.com/project-barca/barca-cli/generate/node/integrate"
 	"github.com/project-barca/barca-cli/generate/node/make"
 	"github.com/urfave/cli/v2"
 )
@@ -14,8 +13,11 @@ func GenerateWin() {
 	nameProject := os.Args[len(os.Args)-1]
 	var language string
 	var framework string
+	var database string
 	var port string
 	var url string
+	var table string
+	var collection string
 
 	app := &cli.App{
 		Name:        "<seu-projeto>",
@@ -39,6 +41,21 @@ func GenerateWin() {
 				Value:       "4200",
 				Usage:       "Especifíque a Porta do Servidor",
 				Destination: &port,
+			},
+			&cli.StringFlag{
+				Name:        "database, db",
+				Usage:       "Especifíque o Banco De Dados para utilizar no recurso solicitado",
+				Destination: &database,
+			},
+			&cli.StringFlag{
+				Name:        "table, t",
+				Usage:       "Especifíque o nome da Tabela para Banco De Dados SQL",
+				Destination: &table,
+			},
+			&cli.StringFlag{
+				Name:        "collection, cl",
+				Usage:       "Defina o nome da Coleção para Banco De Dados NoSQL",
+				Destination: &collection,
 			},
 			&cli.StringFlag{
 				Name:        "connect, c",
@@ -88,7 +105,7 @@ func GenerateWin() {
 						Description: "Implementar entidades para o projeto",
 						Action: func(c *cli.Context) error {
 							directory := c.Args().First()
-							make.Model(language, directory, framework, port, nameProject)
+							make.Model(language, directory, collection, database)
 
 							return nil
 						},
@@ -100,8 +117,8 @@ func GenerateWin() {
 						Usage:       "Adicionar Controller",
 						Description: "Implementar controladores funcionais para o projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							make.Controller(language, directory, framework, port, nameProject)
+							//directory := c.Args().First()
+							//make.Controller(language, directory, framework, port, nameProject)
 
 							return nil
 						},
@@ -122,8 +139,8 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados MySQL",
 						Description: "Implementar MySQL em seu projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							integrate.MySQL(language, directory, port, nameProject)
+							//directory := c.Args().First()
+							//integrate.MySQL(language, directory, port, nameProject)
 
 							return nil
 						},
@@ -135,8 +152,8 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados MongoDB",
 						Description: "Implementar MongoDB NoSQL em seu projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							integrate.Mongo(language, directory, framework, port, nameProject)
+							//directory := c.Args().First()
+							//integrate.Mongo(language, directory, framework, port, nameProject)
 
 							return nil
 						},
@@ -148,8 +165,8 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados PostgreSQL",
 						Description: "Implementar PostgreSQL em seu projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							generate.API(language, directory, framework, port, nameProject)
+							//directory := c.Args().First()
+							//generate.API(language, directory, framework, port, nameProject)
 
 							return nil
 						},
@@ -161,8 +178,8 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados Microsoft SQL Server",
 						Description: "Implementar Microsoft SQL Server em seu projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							generate.API(language, directory, framework, port, nameProject)
+							//directory := c.Args().First()
+							//generate.API(language, directory, framework, port, nameProject)
 
 							return nil
 						},
@@ -174,8 +191,8 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados Oracle SQL",
 						Description: "Implementar Oracle SQL em seu projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							generate.API(language, directory, framework, port, nameProject)
+							//directory := c.Args().First()
+							//generate.API(language, directory, framework, port, nameProject)
 
 							return nil
 						},
@@ -187,8 +204,8 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados DynamoDB",
 						Description: "Implementar Amazon DynamoDB NoSQL em seu projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							generate.API(language, directory, framework, port, nameProject)
+							//directory := c.Args().First()
+							//generate.API(language, directory, framework, port, nameProject)
 
 							return nil
 						},
@@ -200,8 +217,8 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados IBM DB2",
 						Description: "Implementar IBM DB2 em seu projeto",
 						Action: func(c *cli.Context) error {
-							directory := c.Args().First()
-							generate.API(language, directory, framework, port, nameProject)
+							//directory := c.Args().First()
+							//generate.API(language, directory, framework, port, nameProject)
 
 							return nil
 						},
