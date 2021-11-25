@@ -4,6 +4,7 @@
   "create_directory_api":  "Création d'une structure de dossiers...",
   "create_api_success":  "Projet construit avec succès!",
   "success_model_mongodb_express":  "ajouté: nouveaux modèles pour se connecter à MongoDB",
+  "success_model_mysql_express_sequelize":  "added:   new models to connect to MySQL",
   "success_package_json":  "créé  :  package.json",
   "success_node_modules":  "créé  :  node_modules/",
   "message_express_run_server": "Votre serveur express fonctionne à l'adresse: ",
@@ -12,5 +13,6 @@
   "error_modules_npm":  "Erreur lors de l'installation des dépendances npm",
   "error_directory_api":  "Il existe déjà un dossier portant le même nom que le projet que vous essayez de créer...",
   "error_package_json":  "Erreur lors de la tentative d'ajout de package.json à votre projet node.js. Il n'y a probablement pas encore de projet Node.js.",
-  "error_model_mongo_express":  "Erreur lors de la tentative d'ajout de modèles à votre projet node.js."
+  "error_model_mongo_express":  "Erreur lors de la tentative d'ajout de modèles à votre projet node.js.",
+  "error_model_mysql_express_sequelize":  "Erreur lors de la tentative d'ajout de modèles à votre projet node.js."
 }
