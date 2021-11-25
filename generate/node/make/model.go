@@ -33,10 +33,9 @@ func Model(lang string, directory string, collection string, database string) {
 		localizer = i18n.NewLocalizer(bundle, language.BrazilianPortuguese.String(), language.English.String(), language.French.String())
 	}
 
+	_, errorPath := os.Stat("./" + directory)
 	switch database {
 	case "mongo":
-		_, errorPath := os.Stat("./" + directory)
-
 		localizeConfigErrorModelMongoExpress := i18n.LocalizeConfig{
 			MessageID: "error_model_mongo_express",
 		}
@@ -91,6 +90,56 @@ func Model(lang string, directory string, collection string, database string) {
 
 	case "mysql":
 		// mysql
+		localizeConfigErrorModelMySQLSequelizse := i18n.LocalizeConfig{
+			MessageID: "error_model_mysql_express_sequelize",
+		}
+		localizeConfigSuccessModelMySQLSequelize := i18n.LocalizeConfig{
+			MessageID: "success_model_mysql_express_sequelize",
+		}
+		resultErrorModelMySQLSequelize, _ := localizer.Localize(&localizeConfigErrorModelMySQLSequelizse)
+		resultSuccessMySQLSequelize, _ := localizer.Localize(&localizeConfigSuccessModelMySQLSequelize)
+		// IS NODE ?
+		if isNode == true {
+			if os.IsNotExist(errorPath) {
+				pterm.Error.Println(resultErrorModelMySQLSequelize)
+			} else {
+				path := directory + "/model"
+
+				if _, err := os.Stat(path); os.IsNotExist(err) {
+					os.Mkdir(path, 0755)
+				}
+				f, err := os.Create(path + "/" + collection + ".js")
+
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				defer f.Close()
+
+				firstLine := "module.exports = (sequelize, Sequelize) => {\n  const " + strings.Title(collection) + " = sequelize.define('" + collection + "', {\n\n\n  });\n\n  return " + strings.Title(collection) + ";\n"
+				data := []byte(firstLine)
+
+				_, err2 := f.Write(data)
+
+				if err2 != nil {
+					log.Fatal(err2)
+				}
+
+				line2 := "}"
+				data2 := []byte(line2)
+
+				var idx int64 = int64(len(data))
+
+				_, err3 := f.WriteAt(data2, idx)
+
+				if err3 != nil {
+					log.Fatal(err3)
+				}
+
+				pterm.Success.Println(resultSuccessMySQLSequelize)
+			}
+
+		}
 	case "dynamo":
 		// dynamo
 	case "oracle":
