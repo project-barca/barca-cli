@@ -9,10 +9,12 @@
   "message_express_run_server": "Seu Servidor Express Está Sendo Executado No Endereço: ",
   "success_server_express":  "criado  :  express.js",
   "success_node_modules":  "criado  :  node_modules/",
+  "success_mysql_express":  "integrar  :  integração de Servidor Express com MySQL",
   "install_modules_npm":  "Instalando dependências...",
-  "error_modules_npm":  "Erro ao tentar instalar dependências npm",
+  "error_modules_npm":  "Erro ao tentar instalar dependências Npm",
   "error_directory_api":  "Já existe uma pasta com o mesmo nome do projeto que você está tentando criar",
   "error_package_json":  "Erro ao tentar adicionar package.json em seu projeto node.js. Provavelmente ainda não existe um projeto Node.js",
   "error_model_mongo_express":  "Erro ao tentar adicionar modelos em seu projeto Node.js",
-  "error_model_mysql_express_sequelize":  "Erro ao tentar adicionar modelos em seu projeto Node.js"
+  "error_model_mysql_express_sequelize":  "Erro ao tentar adicionar modelos em seu projeto Node.js",
+  "error_mysql_express":  "Erro ao tentar integrar o MySQL em seu projeto em Express.js. Talvez você esteja usando outro ambiente de desenvolvimento."
 }
