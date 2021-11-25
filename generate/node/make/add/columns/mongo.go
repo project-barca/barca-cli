@@ -21,7 +21,7 @@ func ColumnsMongoModel(path string, collection string, field string, types strin
 	default:
 	}
 
-	err := file.InsertStringToFile(path+"/model/"+collection+".js", "      "+field+": { type: "+typeData+" }", 5)
+	err := file.InsertStringToFile(path+"/model/"+collection+".js", "      "+field+": { type: "+typeData+" }", 4)
 	if err != nil {
 		fmt.Printf("Deu erro ao tentar escrever no arquivo")
 	}
