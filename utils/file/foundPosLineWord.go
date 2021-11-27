@@ -4,29 +4,27 @@ import (
 	"bufio"
 	"os"
 	"strings"
-
-	"github.com/pterm/pterm"
 )
 
-func FindPositionLineText(path string, text string) {
+func FindPositionLineText(path string, text string) int {
+	var foundPos int
 	f, err := os.Open(path)
 	if err != nil {
-		return
+
 	}
 	defer f.Close()
-
 	scanner := bufio.NewScanner(f)
 
 	found := 1
 	for scanner.Scan() {
 		if strings.Contains(scanner.Text(), text) {
-			pterm.Success.Println(found)
+			foundPos = found
 		}
 		found++
 	}
 
 	if err := scanner.Err(); err != nil {
-		return
+		return 0
 	}
-
+	return foundPos
 }
