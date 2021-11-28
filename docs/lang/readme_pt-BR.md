@@ -104,7 +104,7 @@ Você pode traduzir as mensagens que a ferramenta **barca-cli** retorna especifi
 Exemplo:
 
 ```sh
-go run main.go --lang francais init api <project-name>
+go run main.go --lang francais init api <seu-projeto>
 ```
 
 <br>
@@ -127,7 +127,6 @@ A seguir está um exemplo de como gerar uma **API REST** em *Node.js* e configur
 1. Servidor Web
 2. Controladores, Rotas & Modelos
 3. Banco de Dados
-
 <br>
 
 #### Configurar Servidor
@@ -140,9 +139,35 @@ Vamos mencionar **flags** para configurar o projeto, este é um exemplo utilizan
 go run main.go --framework express --port 4200 init api <seu-projeto>
 ```
 
+<br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-express-api" src="docs/assets/gif/barca-cli-4-express-api.gif" />
+</p>
 
 <br>
 <br>
+
+
+#### Especificando seu idioma:
+
+<br>
+
+```sh
+go run main.go --language portugues-brasileiro --framework express --port 4200 init api <your-project>
+```
+
+<br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-api-language-i18n" src="../assets/gif/barca-cli-5-express-api-language.gif" />
+</p>
+
+<br>
+<br>
+
 
 #### Adicionar Modelos DB
 
@@ -157,7 +182,14 @@ Após a construção do servidor, vamos adicionar modelos para nosso projeto, es
 go run main.go --database mysql --collection usuarios  add model <seu-projeto>
 ```
 
+
 <br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-insert-models" src="../assets/gif/barca-cli-7-insert-models.gif" />
+</p>
+
 <br>
 <br>
 
@@ -170,3 +202,13 @@ Agora precisamos informar por **flags** as configurações para acessar e conect
 ```sh
 go run main.go --dbname testdb --host 127.0.0.1 --user root --password 12345 integrate mysql <seu-projeto>
 ```
+
+<br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-mysql-integrate" src="../assets/gif/barca-cli-8-integrate-mysql.gif" />
+</p>
+
+<br>
+<br>

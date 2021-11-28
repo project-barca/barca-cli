@@ -118,10 +118,9 @@ It is very simple to generate an API with **Barca CLI**, with a few commands you
 The following is an example of how to generate a **REST API** in *Node.js* and configure your environment.
 
 <br>
-  **1.** Web Server
-  **2.** Controllers, Routes & Models
-  **3.** Database
-
+  1. Web Server
+  2. Controllers, Routes & Models
+  3. Database
 <br>
 
 #### Configure Server
@@ -131,12 +130,42 @@ Let's mention **flags** to configure the project, this is an example using the *
 <br>
 
 ```sh
-go run main.go --framework express --port 4200 init api <seu-projeto>
+go run main.go --framework express --port 4200 init api <your-project>
 ```
 
+<br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-express-api" src="docs/assets/gif/barca-cli-4-express-api.gif" />
+</p>
+
+
 
 <br>
 <br>
+
+#### Specifying your language:
+
+<br>
+
+```sh
+go run main.go --language francais --framework express --port 4200 init api <your-project>
+```
+
+<br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-api-language-i18n" src="docs/assets/gif/barca-cli-5-express-api-language.gif" />
+</p>
+
+
+
+<br>
+<br>
+
+
 
 #### Add DB Templates
 
@@ -151,7 +180,14 @@ After building the server, let's add models to our project, specify the Database
 go run main.go --database mysql --collection users  add model <your-project>
 ```
 
+
 <br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-insert-models" src="docs/assets/gif/barca-cli-7-insert-models.gif" />
+</p>
+
 <br>
 <br>
 
@@ -164,3 +200,15 @@ Now we need to inform by **flags** the settings to access and connect to our ser
 ```sh
 go run main.go --dbname testdb --host 127.0.0.1 --user root --password 12345 integrate mysql <seu-projeto>
 ```
+
+<br>
+<br>
+
+<p align="center">
+  <img align="center" alt="barca-cli-mysql-integrate" src="docs/assets/gif/barca-cli-8-integrate-mysql.gif" />
+</p>
+
+
+
+<br>
+<br>
