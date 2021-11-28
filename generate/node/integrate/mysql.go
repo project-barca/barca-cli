@@ -7,6 +7,7 @@ import (
 
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	scan "github.com/project-barca/barca-cli/scan/environment"
+	"github.com/project-barca/barca-cli/utils/file"
 	"github.com/pterm/pterm"
 
 	"golang.org/x/text/language"
@@ -47,6 +48,9 @@ func MySQL(directory string, dbservice string, dbname string, port string, host 
 	resultSuccessMySQLExpress, _ := localizer.Localize(&localizeConfigSuccessMySQLExpress)
 
 	if isNode == true {
+		indexLineDependencies := file.FindPositionLineText(directory+"/package.json", "dependencies")
+		file.InsertStringToFile(directory+"/package.json", "    \"mysql2\": \"^2.0.2\",\n    \"sequelize\": \"^5.21.2\",\n", indexLineDependencies)
+
 		if os.IsNotExist(errorPath) {
 			pterm.Error.Println(resultErrorMySQLExpress)
 		} else {
