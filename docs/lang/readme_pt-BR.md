@@ -113,3 +113,41 @@ go run main.go --lang francais init api <project-name>
 <p align="center">
   <img align="center" alt="barca-cli" src="../assets/gif/barca-cli-2.gif" />
 </p>
+
+## Gerar API REST
+
+É muito simples gerar uma API com **Barca CLI**, com apenas poucos comandos você vai permitir a consrução de uma API funcionando da maneira que você quer.
+
+A seguir nós vamos construir uma **API REST** em *Node.js* e vamos configurar todo ambiente da API.
+
+
+1. Servidor Web
+2. Controladores, Rotas & Modelos
+3. Banco de Dados
+#### Configurar Servidor
+
+Vamos mencionar **flags** para configurar o projeto, este é um exemplo utilizando o framework *Express.js* como servidor sendo executado na porta *4200*.
+
+
+```sh
+go run main.go --framework express --port 4200 init api <seu-projeto>
+```
+
+#### Adicionar Modelos DB
+
+
+Após a construção do servidor, vamos adicionar modelos para nosso projeto, especificamos o tipo de Banco de Dados que vai ser usado com a flag `--database` e a tabela/coleção com `--collection`. No exemplo a seguir está mostrando como inserir um modelo de usuários para Banco de dados **MySQL**
+
+
+```sh
+go run main.go --database mysql --collection users  add model <seu-projeto>
+```
+
+#### Integrar MySQL
+
+Agora precisamos informar por **flags** as configurações para acessar e conectar o nosso servidor **MySQL**
+
+
+```sh
+go run main.go --dbname testdb --host 127.0.0.1 --user root --password 12345 integrate mysql <seu-projeto>
+```
