@@ -110,3 +110,57 @@ go run main.go --lang francais init api <project-name>
 <p align="center">
   <img align="center" alt="barca-cli" src="docs/assets/gif/barca-cli-2.gif" />
 </p>
+
+## Generate REST API
+
+It is very simple to generate an API with **Barca CLI**, with a few commands you will allow the construction of the project the way you want.
+
+The following is an example of how to generate a **REST API** in *Node.js* and configure your environment.
+
+<br>
+  **1.** Web Server
+  **2.** Controllers, Routes & Models
+  **3.** Database
+
+<br>
+
+#### Configure Server
+
+Let's mention **flags** to configure the project, this is an example using the *Express.js* framework as a server running on port *4200*.
+
+<br>
+
+```sh
+go run main.go --framework express --port 4200 init api <seu-projeto>
+```
+
+
+<br>
+<br>
+
+#### Add DB Templates
+
+<br>
+
+After building the server, let's add models to our project, specify the Database type that will be used with the `--database` flag and the table/collection with `--collection`. In the following example it is showing how to insert a user model for Database **MySQL**
+
+<br>
+<br>
+
+```sh
+go run main.go --database mysql --collection users  add model <your-project>
+```
+
+<br>
+<br>
+<br>
+
+#### Integrate MySQL
+
+Now we need to inform by **flags** the settings to access and connect to our server **MySQL**
+
+<br>
+
+```sh
+go run main.go --dbname testdb --host 127.0.0.1 --user root --password 12345 integrate mysql <seu-projeto>
+```
