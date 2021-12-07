@@ -1,13 +1,43 @@
 package cli
 
 import (
+	"fmt"
+	"io"
 	"log"
 	"os"
+	"os/exec"
+	"sync"
 
 	"github.com/project-barca/barca-cli/generate"
-	"github.com/project-barca/barca-cli/generate/node/make"
+	"github.com/project-barca/barca-cli/generate/node/integrate"
+	faca "github.com/project-barca/barca-cli/generate/node/make"
+	insert "github.com/project-barca/barca-cli/generate/node/make/add/columns"
 	"github.com/urfave/cli/v2"
 )
+
+func copyAndCapture(w io.Writer, r io.Reader) ([]byte, error) {
+	var out []byte
+
+	buf := make([]byte, 1024, 1024)
+	for {
+		n, err := r.Read(buf[:])
+		if n > 0 {
+			d := buf[:n]
+			out = append(out, d...)
+			_, err := w.Write(d)
+			if err != nil {
+				return out, err
+			}
+		}
+		if err != nil {
+			// Read returns io.EOF at the end of file, which is not an error for us
+			if err == io.EOF {
+				err = nil
+			}
+			return out, err
+		}
+	}
+}
 
 func GenerateWin() {
 	nameProject := os.Args[len(os.Args)-1]
@@ -15,12 +45,18 @@ func GenerateWin() {
 	var framework string
 	var database string
 	var port string
+	var host string
 	var url string
+	var dbname string
+	var user string
+	var password string
 	var table string
+	var field string
+	var types string
 	var collection string
 
 	app := &cli.App{
-		Name:        "<seu-projeto>",
+		Name:        "barca-cli",
 		Usage:       "Crie uma nova pasta de origem para o diretório do projeto",
 		Description: "Barca CLI é uma ferramenta para gerar projetos em diversas tecnologias trazendo maior produtividade no desenvolvimento.",
 		Flags: []cli.Flag{
@@ -38,14 +74,44 @@ func GenerateWin() {
 			},
 			&cli.StringFlag{
 				Name:        "port, p",
-				Value:       "4200",
 				Usage:       "Especifíque a Porta do Servidor",
 				Destination: &port,
+			},
+			&cli.StringFlag{
+				Name:        "host, h",
+				Value:       "localhost",
+				Usage:       "Especifíque a Host do Servidor",
+				Destination: &host,
+			},
+			&cli.StringFlag{
+				Name:        "dbname, dn",
+				Usage:       "Especifíque o nome do Banco de Dados que deseja utilizar",
+				Destination: &dbname,
+			},
+			&cli.StringFlag{
+				Name:        "user, u",
+				Usage:       "Especifíque o usuário",
+				Destination: &user,
+			},
+			&cli.StringFlag{
+				Name:        "password, p",
+				Usage:       "Especifíque a senha do usuário",
+				Destination: &password,
 			},
 			&cli.StringFlag{
 				Name:        "database, db",
 				Usage:       "Especifíque o Banco De Dados para utilizar no recurso solicitado",
 				Destination: &database,
+			},
+			&cli.StringFlag{
+				Name:        "field, fi",
+				Usage:       "Defina o nome do campo",
+				Destination: &field,
+			},
+			&cli.StringFlag{
+				Name:        "type, t",
+				Usage:       "Defina o tipo de dados para o campo",
+				Destination: &types,
 			},
 			&cli.StringFlag{
 				Name:        "table, t",
@@ -71,7 +137,7 @@ func GenerateWin() {
 			//INIT COMMAND *********************  INIT COMMAND   ***************************** INIT COMMAND  ***********************
 			{
 				Name:        "init",
-				Aliases:     []string{"i"},
+				Aliases:     []string{"i", "iniciar"},
 				Usage:       "Criar Um Novo Projeto",
 				Description: "Inicie a tecnologia que você deseja",
 				Subcommands: []*cli.Command{
@@ -85,6 +151,27 @@ func GenerateWin() {
 							directory := c.Args().First()
 							generate.API(language, directory, framework, port, nameProject)
 
+							return nil
+						},
+					},
+				},
+			},
+			//INSERT COMMAND *********************  INSERT COMMAND   ***************************** INSERT COMMAND  ***********************
+			{
+				Name:        "insert",
+				Aliases:     []string{"i", "inserir", "acrescentar"},
+				Usage:       "Inserir Recurso",
+				Description: "Inserir recursos em seu projeto",
+				Subcommands: []*cli.Command{
+					//COLUMNS MODEL DB *********************  COLUMNS MODEL DB   ***************************** COLUMNS MODEL DB  ***********************
+					{
+						Name:        "fields",
+						Aliases:     []string{"f", "campos", "colunas"},
+						Usage:       "Adicionar Novos Campos em Entidade",
+						Description: "Adicionar novos atributos em modelo de entidade",
+						Action: func(c *cli.Context) error {
+							directory := c.Args().First()
+							insert.ColumnsMongoModel(directory, collection, field, types)
 							return nil
 						},
 					},
@@ -105,7 +192,7 @@ func GenerateWin() {
 						Description: "Implementar entidades para o projeto",
 						Action: func(c *cli.Context) error {
 							directory := c.Args().First()
-							make.Model(language, directory, collection, database)
+							faca.Model(language, directory, collection, database)
 
 							return nil
 						},
@@ -118,7 +205,7 @@ func GenerateWin() {
 						Description: "Implementar controladores funcionais para o projeto",
 						Action: func(c *cli.Context) error {
 							//directory := c.Args().First()
-							//make.Controller(language, directory, framework, port, nameProject)
+							//faca.Controller(language, directory, framework, port, nameProject)
 
 							return nil
 						},
@@ -139,8 +226,9 @@ func GenerateWin() {
 						Usage:       "Integrar Banco de Dados MySQL",
 						Description: "Implementar MySQL em seu projeto",
 						Action: func(c *cli.Context) error {
-							//directory := c.Args().First()
-							//integrate.MySQL(language, directory, port, nameProject)
+							directory := c.Args().First()
+							dbservice := "mysql"
+							integrate.MySQL(directory, dbservice, dbname, port, host, user, password, language)
 
 							return nil
 						},
@@ -220,6 +308,90 @@ func GenerateWin() {
 							//directory := c.Args().First()
 							//generate.API(language, directory, framework, port, nameProject)
 
+							return nil
+						},
+					},
+				},
+			},
+			//SCAN COMMAND *********************  ADD COMMAND   ***************************** ADD COMMAND  ***********************
+			{
+				Name:        "scan",
+				Aliases:     []string{"sc", "scanner", "scanear", "escanear"},
+				Usage:       "Escanear Máquina Computacional",
+				Description: "Escanear a Máquina Hospedeira dos Projetos e seus Dispositivos Conectados",
+				Subcommands: []*cli.Command{
+					// SCAN DEVICES *********************  SCAN DEVICES   ***************************** SCAN DEVICES  ***********************
+					{
+						Name:        "devices",
+						Aliases:     []string{"dv", "dispositivos"},
+						Usage:       "Escanear Dispositivos",
+						Description: "Escanear Dispositivos Conectados",
+						Action: func(c *cli.Context) error {
+							//directory := c.Args().First()
+							fmt.Printf("scan dispositivos conectados")
+
+							return nil
+						},
+					},
+					// SCAN MOTHERBOARD *********************  SCAN MOTHERBOARD   ***************************** SCAN MOTHERBOARD  ***********************
+					{
+						Name:        "motherboard",
+						Aliases:     []string{"mb", "minhaplacamae", "minha-placa", "minhaplaca", "minha-placa-mae", "mymotherboard", "placa-mae", "placamae", "moba"},
+						Usage:       "Escanear Placa-Mãe",
+						Description: "Obtenha informações da Placa Mãe e Periféricos Conectados",
+						Action: func(c *cli.Context) error {
+							//directory := c.Args().First()
+
+							cmd := exec.Command("dir", "C:\\", ">", "D:\\info.txt")
+							//cmd := exec.Command("ipconfig", "/all")
+							//cmd := exec.Command("wmic", "cpu", "get", "name")
+
+							var stdout, stderr []byte
+							var errStdout, errStderr error
+							stdoutIn, _ := cmd.StdoutPipe()
+							stderrIn, _ := cmd.StderrPipe()
+							err := cmd.Start()
+							if err != nil {
+								log.Fatalf("cmd.Start() failed with '%s'\n", err)
+							}
+
+							// cmd.Wait() should be called only after we finish reading
+							// from stdoutIn and stderrIn.
+							// wg ensures that we finish
+							var wg sync.WaitGroup
+							wg.Add(1)
+							go func() {
+								stdout, errStdout = copyAndCapture(os.Stdout, stdoutIn)
+								wg.Done()
+							}()
+
+							stderr, errStderr = copyAndCapture(os.Stderr, stderrIn)
+
+							wg.Wait()
+
+							err = cmd.Wait()
+							if err != nil {
+								log.Fatalf("cmd.Run() failed with %s\n", err)
+							}
+							if errStdout != nil || errStderr != nil {
+								log.Fatal("failed to capture stdout or stderr\n")
+							}
+							outStr, errStr := string(stdout), string(stderr)
+							fmt.Printf("\n%s\nerr:\n%s\n", outStr, errStr)
+
+							return nil
+						},
+					},
+					// SCAN NETWORK *********************  SCAN NETWORK   ***************************** SCAN NETWORK  ***********************
+					{
+						Name:        "network",
+						Aliases:     []string{"net", "rede", "networks", "mynet", "my-net", "minhanet", "minha-rede", "minharede", "interfaces-de-rede", "interfacesderede", "interface-de-rede", "interfacederede"},
+						Usage:       "Escanear Rede",
+						Description: "Obtenha Informações Sobre a Infraestrutura de Redes Conectada",
+						Action: func(c *cli.Context) error {
+							//directory := c.Args().First()
+							//	faca.Model(language, directory, collection, database)
+							fmt.Printf("scan net")
 							return nil
 						},
 					},
