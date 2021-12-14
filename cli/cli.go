@@ -427,7 +427,6 @@ func GenerateWin() {
 							if dir.IsDirEmpty(project) == true {
 								fmt.Print("O caminho do Projeto específicado está vazio")
 							} else {
-								fmt.Print("Este projeto contém arquivos e pastas")
 								file.NewTempFile("barca-cli.dir-"+project+".txt", "BARCA_TEMP_LIST_DIR")
 								dir.Scanner(project)
 
@@ -457,9 +456,8 @@ func GenerateWin() {
 						Action: func(c *cli.Context) error {
 							folder := c.Args().First()
 							if dir.IsDirEmpty(folder) == true {
-								fmt.Print("O caminho do Projeto específicado está vazio")
+								fmt.Print("O caminho da Pasta específicada está vazio")
 							} else {
-								fmt.Print("Este projeto contém arquivos e pastas")
 								file.NewTempFile("barca-cli.dir-"+folder+".txt", "BARCA_TEMP_LIST_DIR")
 								dir.Scanner(folder)
 
