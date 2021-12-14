@@ -3,15 +3,20 @@ package cli
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/project-barca/barca-cli/generate"
 	"github.com/project-barca/barca-cli/generate/node/integrate"
 	faca "github.com/project-barca/barca-cli/generate/node/make"
 	insert "github.com/project-barca/barca-cli/generate/node/make/add/columns"
+	"github.com/project-barca/barca-cli/utils/dir"
+	"github.com/project-barca/barca-cli/utils/file"
 	"github.com/urfave/cli/v2"
 )
 
@@ -180,14 +185,14 @@ func GenerateWin() {
 			//ADD COMMAND *********************  ADD COMMAND   ***************************** ADD COMMAND  ***********************
 			{
 				Name:        "add",
-				Aliases:     []string{"a"},
+				Aliases:     []string{"a", "adicionar", "acrescentar"},
 				Usage:       "Construir recursos em Projeto",
 				Description: "Integrar Serviços para seu Projeto",
 				Subcommands: []*cli.Command{
 					//MODEL ENTITY *********************  MODEL ENTITY   ***************************** MODEL ENTITY  ***********************
 					{
 						Name:        "model",
-						Aliases:     []string{"m"},
+						Aliases:     []string{"m", "modelo", "entidade"},
 						Usage:       "Adicionar Modelo",
 						Description: "Implementar entidades para o projeto",
 						Action: func(c *cli.Context) error {
@@ -200,7 +205,7 @@ func GenerateWin() {
 					//CONTROLLER *********************  CONTROLLER   ***************************** CONTROLLER  ***********************
 					{
 						Name:        "controller",
-						Aliases:     []string{"c"},
+						Aliases:     []string{"c", "controler", "controle"},
 						Usage:       "Adicionar Controller",
 						Description: "Implementar controladores funcionais para o projeto",
 						Action: func(c *cli.Context) error {
@@ -336,7 +341,7 @@ func GenerateWin() {
 					// SCAN MOTHERBOARD *********************  SCAN MOTHERBOARD   ***************************** SCAN MOTHERBOARD  ***********************
 					{
 						Name:        "motherboard",
-						Aliases:     []string{"mb", "minhaplacamae", "minha-placa", "minhaplaca", "minha-placa-mae", "mymotherboard", "placa-mae", "placamae", "moba"},
+						Aliases:     []string{"mb", "minhaplacamae", "minha-placa", "minhaplaca", "minha-placa-mae", "motherboard", "placa-mae", "placamae", "moba", "baseboard"},
 						Usage:       "Escanear Placa-Mãe",
 						Description: "Obtenha informações da Placa Mãe e Periféricos Conectados",
 						Action: func(c *cli.Context) error {
@@ -345,6 +350,21 @@ func GenerateWin() {
 							cmd := exec.Command("dir", "C:\\", ">", "D:\\info.txt")
 							//cmd := exec.Command("ipconfig", "/all")
 							//cmd := exec.Command("wmic", "cpu", "get", "name")
+
+							//FABRICANTE DA PLACA MAE
+							//cmd := exec.Command("wmic", "baseboard", "get", "manufacturer")
+
+							//NOME DO PRODUTO DA PLACA
+							//cmd := exec.Command("wmic", "baseboard", "get", "product")
+
+							//VERSÃO DA PLACA
+							//cmd := exec.Command("wmic", "baseboard", "get", "version")
+
+							//NÚMERO DE SÉRIA DA PLACA
+							//cmd := exec.Command("wmic", "baseboard", "get", "serialnumber")
+
+							//VERSAO DA BIOS
+							//cmd := exec.Command("wmic", "bios", "get", "smbiosbiosversion")
 
 							var stdout, stderr []byte
 							var errStdout, errStderr error
@@ -392,6 +412,70 @@ func GenerateWin() {
 							//directory := c.Args().First()
 							//	faca.Model(language, directory, collection, database)
 							fmt.Printf("scan net")
+							return nil
+						},
+					},
+					// SCAN PROJETO *********************  SCAN PROJETO   ***************************** SCAN PROJETO  ***********************
+					{
+						Name:        "project",
+						Aliases:     []string{"proj", "projeto", "projet", "meuprojeto", "meu-projeto", "project-me", "meu-aplicativo", "meuaplicativo", "minhaapi", "minha-api", "me-api", "minhaaplicacao", "minhaaplicacap", "minha-aplicacao", "minha-aplicacap"},
+						Usage:       "Escanear Projeto",
+						Description: "Obtenha Informações Sobre Tecnologias, Vulnerabilidades, Atualizações, Ramificações pendentes em seu Projeto",
+						Action: func(c *cli.Context) error {
+							project := c.Args().First()
+
+							if dir.IsDirEmpty(project) == true {
+								fmt.Print("O caminho do Projeto específicado está vazio")
+							} else {
+								fmt.Print("Este projeto contém arquivos e pastas")
+								file.NewTempFile("barca-cli.dir-"+project+".txt", "BARCA_TEMP_LIST_DIR")
+								dir.Scanner(project)
+
+								input, err := ioutil.ReadFile(os.Getenv("BARCA_TEMP_LIST_DIR"))
+								if err != nil {
+									log.Println(err)
+								}
+								lines := strings.Split(string(input), "\n")
+
+								var files []string
+								for i := 0; i < len(lines); i++ {
+									files = append(files, filepath.Ext(lines[i]))
+								}
+								fmt.Print(file.WhatIsExtension(files))
+								//file.GetInfo(project + "/express.js")
+							}
+
+							return nil
+						},
+					},
+					// SCAN FOLDER *********************  SCAN FOLDER   ***************************** SCAN FOLDER  ***********************
+					{
+						Name:        "folder",
+						Aliases:     []string{"fol", "pasta", "caminho", "folder"},
+						Usage:       "Escanear Pasta",
+						Description: "Obtenha Informações Sobre Tamanho de Arquivos, Permissões, ",
+						Action: func(c *cli.Context) error {
+							folder := c.Args().First()
+							if dir.IsDirEmpty(folder) == true {
+								fmt.Print("O caminho do Projeto específicado está vazio")
+							} else {
+								fmt.Print("Este projeto contém arquivos e pastas")
+								file.NewTempFile("barca-cli.dir-"+folder+".txt", "BARCA_TEMP_LIST_DIR")
+								dir.Scanner(folder)
+
+								input, err := ioutil.ReadFile(os.Getenv("BARCA_TEMP_LIST_DIR"))
+								if err != nil {
+									log.Println(err)
+								}
+								lines := strings.Split(string(input), "\n")
+
+								var files []string
+								for i := 0; i < len(lines); i++ {
+									files = append(files, filepath.Ext(lines[i]))
+								}
+								fmt.Print(file.WhatIsExtension(files))
+							}
+
 							return nil
 						},
 					},
