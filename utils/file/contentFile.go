@@ -72,3 +72,11 @@ func GetStringLineByIndex(path string, index int) string {
 	}
 	return output
 }
+
+func GetNumberLines(path string) int {
+	lines, err := File2lines(path)
+	if err != nil {
+		fmt.Errorf("Error")
+	}
+	return len(lines)
+}
