@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"github.com/project-barca/barca-cli/utils/file"
 	"github.com/pterm/pterm"
 
 	"golang.org/x/text/language"
@@ -78,4 +80,15 @@ func PackageJson(project string, main string, lang string) {
 
 		pterm.Success.Println(resultSuccessPackageJson)
 	}
+}
+
+// Get version of some module npm
+func GetVersionModule(path string, module string) string {
+	var version []string
+	for i := 0; i < file.GetNumberLines(path+"/package.json"); i++ {
+		if strings.Contains(file.GetStringLineByIndex(path+"/package.json", i), "\""+module+"\"") != false {
+			version = strings.Split(file.GetStringLineByIndex(path+"/package.json", i), ":")
+		}
+	}
+	return version[1]
 }
