@@ -92,3 +92,15 @@ func GetVersionModule(path string, module string) string {
 	}
 	return version[1]
 }
+
+// Check if exists module npm
+func IfExistsModule(path string, module string) bool {
+	var ifExists bool
+
+	for i := 0; i < file.GetNumberLines(path+"/package.json"); i++ {
+		if strings.Contains(file.GetStringLineByIndex(path+"/package.json", i), "\""+module+"\"") != false {
+			ifExists = true
+		}
+	}
+	return ifExists
+}
