@@ -1,8 +1,9 @@
 package projeto
 
 import (
-	"fmt"
 	"path/filepath"
+
+	"github.com/project-barca/barca-cli/generate/node/dependencies"
 )
 
 func WhatsIsLanguages(extensions []string) []string {
@@ -100,7 +101,6 @@ func WhatsIsLanguages(extensions []string) []string {
 		languages = append(languages, key)
 	}
 
-	fmt.Print(languages)
 	// fmt.Print("Rust: " + string(percent*increment_rs) + "%")
 	// fmt.Print("Javascript: " + string(percent*increment_js) + "%")
 	// fmt.Print("TypeScript: " + string(percent*increment_ts) + "%")
@@ -119,12 +119,43 @@ func WhatsIsLanguages(extensions []string) []string {
 	return languages
 }
 
-func WhatsIsFrameworks(languages []string) []string {
-	var extensions []string
+func WhatsIsFrameworks(languages []string, path string) []string {
+
+	var frameworks []string
+	var modules []string
+
 	for i := 0; i < len(languages); i++ {
-		extensions = append(extensions, "da", "de")
+		switch languages[i] {
+		case "javascript":
+			modules = append(modules, "total", "feather", "loopback", "koa", "sails", "nest", "meteor", "socket", "derby", "express", "adonis", "rapi", "react", "vue", "angular", "bootstrap", "ember")
+			for y := 0; y < len(modules); y++ {
+				if dependencies.IfExistsModule(path, modules[y]) == true {
+					frameworks = append(frameworks, modules[y])
+				}
+			}
+
+		case "typescript":
+			modules = append(modules, "express", "nest", "loopback", "feather")
+
+		case "python":
+			modules = append(modules, "django", "flask", "pyramid", "falcon", "cherrypy", "bottle", "web2py", "tornado", "cubicweb", "dash")
+
+		case "java":
+			modules = append(modules, "spring", "play", "gwt", "hibernate", "struts", "vaadin", "grails", "jsf", "grails")
+
+		case "golang":
+			modules = append(modules, "gorilla", "echo", "gin", "beego", "fasthttp", "kit", "fiber", "iris")
+
+		case "php":
+			modules = append(modules, "laravel", "symfony", "zend", "phalcon", "cake", "yii", "codeigniter")
+
+		case "ruby":
+			modules = append(modules, "rubyonrails", "sinatra", "roda", "camping", "cuba", "nancy", "remaze", "ramaze", "goliath", "hanami", "padrinho")
+
+		}
 	}
-	return extensions
+
+	return frameworks
 }
 
 func WhatsIsDatabase(fileName []string) []string {
