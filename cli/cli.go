@@ -16,7 +16,7 @@ import (
 	faca "github.com/project-barca/barca-cli/generate/node/make"
 	insert "github.com/project-barca/barca-cli/generate/node/make/add/columns"
 	"github.com/project-barca/barca-cli/utils/dir"
-	"github.com/project-barca/barca-cli/utils/file"
+	projeto "github.com/project-barca/barca-cli/utils/project"
 	"github.com/urfave/cli/v2"
 )
 
@@ -56,12 +56,19 @@ func GenerateWin() {
 	var user string
 	var password string
 	var table string
-	var field string
+	var file string
 	var types string
 	var collection string
 
+	cli.VersionFlag = &cli.BoolFlag{
+		Name:    "version",
+		Aliases: []string{"V"},
+		Usage:   "Exibir versão",
+	}
+
 	app := &cli.App{
 		Name:        "barca-cli",
+		Version:     "v1.1.0",
 		Usage:       "Crie uma nova pasta de origem para o diretório do projeto",
 		Description: "Barca CLI é uma ferramenta para gerar projetos em diversas tecnologias trazendo maior produtividade no desenvolvimento.",
 		Flags: []cli.Flag{
@@ -80,6 +87,7 @@ func GenerateWin() {
 			&cli.StringFlag{
 				Name:        "port, p",
 				Usage:       "Especifíque a Porta do Servidor",
+				DefaultText: "random",
 				Destination: &port,
 			},
 			&cli.StringFlag{
@@ -109,10 +117,12 @@ func GenerateWin() {
 				Destination: &database,
 			},
 			&cli.StringFlag{
-				Name:        "field, fi",
-				Usage:       "Defina o nome do campo",
-				Destination: &field,
+				Name:     "file, fi",
+				Aliases:  []string{"f"},
+				Usage:    "Defina o caminho do arquivo para adicionar colunas ao modelo de dados",
+				FilePath: &file,
 			},
+
 			&cli.StringFlag{
 				Name:        "type, t",
 				Usage:       "Defina o tipo de dados para o campo",
@@ -197,7 +207,7 @@ func GenerateWin() {
 						Description: "Implementar entidades para o projeto",
 						Action: func(c *cli.Context) error {
 							directory := c.Args().First()
-							faca.Model(language, directory, collection, database)
+							faca.Model(language, directory, collection, database, fields)
 
 							return nil
 						},
@@ -422,13 +432,13 @@ func GenerateWin() {
 						Usage:       "Escanear Projeto",
 						Description: "Obtenha Informações Sobre Tecnologias, Vulnerabilidades, Atualizações, Ramificações pendentes em seu Projeto",
 						Action: func(c *cli.Context) error {
-							project := c.Args().First()
+							pathProject := c.Args().First()
 
-							if dir.IsDirEmpty(project) == true {
+							if dir.IsDirEmpty(pathProject) == true {
 								fmt.Print("O caminho do Projeto específicado está vazio")
 							} else {
-								file.NewTempFile("barca-cli.dir-"+project+".txt", "BARCA_TEMP_LIST_DIR")
-								dir.Scanner(project)
+								file.NewTempFile("barca-cli.dir-"+pathProject+".txt", "BARCA_TEMP_LIST_DIR")
+								dir.Scanner(pathProject)
 
 								input, err := ioutil.ReadFile(os.Getenv("BARCA_TEMP_LIST_DIR"))
 								if err != nil {
@@ -440,7 +450,27 @@ func GenerateWin() {
 								for i := 0; i < len(lines); i++ {
 									files = append(files, filepath.Ext(lines[i]))
 								}
-								fmt.Print(file.WhatIsExtension(files))
+								fmt.Print("\n\n")
+								fmt.Print("Extensões de arquivos:\n\n")
+								fmt.Print(file.WhatsIsExtension(files))
+								programmLang := projeto.WhatsIsLanguages(file.WhatsIsExtension(files))
+								fmt.Print("\n\n")
+								fmt.Print("\n\nLinguagens:\n\n")
+								fmt.Print(programmLang)
+								fmt.Print("\n\n")
+								fmt.Print("\n\n")
+								fmt.Print("Frameworks:")
+								fmt.Print("\n\n")
+								fmt.Print(projeto.WhatsIsFrameworks(programmLang, pathProject))
+								fmt.Print("\n\n")
+								//fmt.Print(file.GetStringLinesByFile(pathProject + "/express.js"))
+								//fmt.Print(file.GetStringLineByIndex(pathProject+"/package.json", 8))
+								//fmt.Print("\nNúmero de linhas:  ", file.GetNumberLines(pathProject+"/express.js"), "\n\n")
+								//fmt.Println(strings.Contains(file.GetStringLineByIndex(pathProject+"/package.json", 7), "dependencies"))
+								//fmt.Print(dependencies.GetVersionModule(pathProject, "express"))
+
+								//fmt.Print(strings.Contains(programmLang[0], "javascript"))
+								//fmt.Print(dependencies.IfExistsModule(pathProject, "react"))
 								//file.GetInfo(project + "/express.js")
 							}
 
@@ -471,8 +501,57 @@ func GenerateWin() {
 								for i := 0; i < len(lines); i++ {
 									files = append(files, filepath.Ext(lines[i]))
 								}
-								fmt.Print(file.WhatIsExtension(files))
+								//fmt.Print(file.WhatsIsExtension(files))
+								projeto.WhatsIsLanguages(file.WhatsIsExtension(files))
 							}
+
+							return nil
+						},
+					},
+				},
+			},
+			//UPDATE COMMAND *********************  UPDATE COMMAND   ***************************** UPDATE COMMAND  ***********************
+			{
+				Name:        "update",
+				Aliases:     []string{"up", "at", "atualizar", "update", "atualiza", "updat", "atualiz"},
+				Usage:       "Atualizar",
+				Description: "Aplicar atualizações em seu projeto",
+				Subcommands: []*cli.Command{
+					//PROJECT UPDATE *********************  PROJECT UPDATE   ***************************** PROJECT UPDATE  ***********************
+					{
+						Name:        "project",
+						Aliases:     []string{"proj", "projeto", "project", "projet", "prototipo", "prototype"},
+						Usage:       "Atualizar Todo Projeto",
+						Description: "Atualize todas as dependências e frameworks utilizado em seu projeto",
+						Action: func(c *cli.Context) error {
+							directory := c.Args().First()
+							faca.Model(language, directory, collection, database)
+
+							return nil
+						},
+					},
+					//SERVER *********************  SERVER   ***************************** SERVER  ***********************
+					{
+						Name:        "server",
+						Aliases:     []string{"s", "server", "servidor", "serve"},
+						Usage:       "Atualizar Servidor",
+						Description: "Atualize somente o servidor em seu projeto",
+						Action: func(c *cli.Context) error {
+							//directory := c.Args().First()
+							//faca.Controller(language, directory, framework, port, nameProject)
+
+							return nil
+						},
+					},
+					//INTERFACE *********************  INTERFACE   ***************************** INTERFACE  ***********************
+					{
+						Name:        "interface",
+						Aliases:     []string{"i", "interfaces", "interface", "frontend", "template"},
+						Usage:       "Atualizar Interface",
+						Description: "Atualize somente o lado do cliente em seu projeto",
+						Action: func(c *cli.Context) error {
+							//directory := c.Args().First()
+							//faca.Controller(language, directory, framework, port, nameProject)
 
 							return nil
 						},
