@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/project-barca/barca-cli/generate"
 	"github.com/project-barca/barca-cli/generate/node/integrate"
@@ -67,9 +68,19 @@ func GenerateWin() {
 	}
 
 	app := &cli.App{
-		Name:        "barca-cli",
-		Version:     "v1.1.0",
-		Usage:       "Crie uma nova pasta de origem para o diretório do projeto",
+		Name:     "barca-cli",
+		Version:  "v1.1.0",
+		Compiled: time.Now(),
+		Authors: []*cli.Author{
+			&cli.Author{
+				Name:  "Aníbal H Souza ",
+				Email: "annibalhsouza@gmail.com",
+			},
+		},
+		Copyright:   "(c) 2022 Barca CLI",
+		HelpName:    "barca",
+		Usage:       "Gere projetos robustos e eficientes com facilidade",
+		UsageText:   "Demonstrando como utilizamos a CLI Barca com precisão em diversos ambientes",
 		Description: "Barca CLI é uma ferramenta para gerar projetos em diversas tecnologias trazendo maior produtividade no desenvolvimento.",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
@@ -154,7 +165,14 @@ func GenerateWin() {
 				Name:        "init",
 				Aliases:     []string{"i", "iniciar"},
 				Usage:       "Criar Um Novo Projeto",
+				Category:    "projeto",
+				Usage:       "inicie um novo projeto",
+        UsageText:   "novo - faça um projeto de software"
 				Description: "Inicie a tecnologia que você deseja",
+				SkipFlagParsing: false,
+        HideHelp:        false,
+        Hidden:          false,
+        HelpName:        "init!",
 				Subcommands: []*cli.Command{
 					//API REST *********************  API REST   ***************************** API REST  ***********************
 					{
