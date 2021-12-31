@@ -17,7 +17,7 @@ func Mongo(opDocker bool) error {
 		os.Exit(0)
 	}
 	fmt.Print("local!")
-	clientOptions := options.Client().ApplyURI("mongodb://mongodb:27017")
+	clientOptions := options.Client().ApplyURI("mongodb://" + os.Getenv("MONGODB_HOST") + ":27017/" + os.Getenv("MONGODB_DBNAME"))
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 
 	if err != nil {
