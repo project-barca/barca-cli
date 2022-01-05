@@ -17,7 +17,7 @@ func MySQL() {
 		User:   os.Getenv("DB_USER"),
 		Passwd: os.Getenv("DB_PASSWORD"),
 		Net:    "tcp",
-		Addr:   "127.0.0.1:3306",
+		Addr:   os.Getenv("DB_HOST") + ":3306",
 		DBName: os.Getenv("DB_NAME"),
 	}
 	// Get a database.
