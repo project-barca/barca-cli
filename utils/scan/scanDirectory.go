@@ -23,6 +23,6 @@ func Directory(directory string) []string {
 	return lines
 }
 
-func GetExtensions(directory string) []string {
+func Extensions(directory string) []string {
 	return file.WhatsIsExtension(Directory(directory))
 }
