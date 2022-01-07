@@ -1,6 +1,43 @@
 package entities
 
 // **************************************************************************************
+// **************************       XML DATA      ***************************************
+// **************************************************************************************
+type AboutXml struct {
+	Name        string `xml:"name"`
+	Description string `xml:"description"`
+	Size        string `xml:"size"`
+}
+type RepositoryXml struct {
+	Url   string `xml:"url"`
+	Stars int    `xml:"stars"`
+	Fork  int    `xml:"fork"`
+}
+type AuthorsXml struct {
+	Name   string `xml:"name"`
+	Email  string `xml:"email"`
+	Github string `xml:"github"`
+}
+type LanguagesXml struct {
+	Name string `xml:"name"`
+	Ext  string `xml:"ext"`
+	Docs string `xml:"docs"`
+}
+type FrameworkXml struct {
+	Name     string `xml:"name"`
+	Version  string `xml:"version"`
+	Language string `xml:"language"`
+}
+
+type ProjectXml struct {
+	AboutMongo      AboutMongo       `xml:"about"`
+	LanguagesMongo  []LanguagesMongo `xml:"languages"`
+	AuthorsMongo    []AuthorsMongo   `xml:"authors"`
+	RepositoryMongo RepositoryMongo  `xml:"repository"`
+	FrameworkMongo  FrameworkMongo   `xml:"framework"`
+}
+
+// **************************************************************************************
 // **************************        MONGODB      ***************************************
 // **************************************************************************************
 type AboutMongo struct {
@@ -30,11 +67,11 @@ type FrameworkMongo struct {
 }
 
 type ProjectMongo struct {
-	AboutMongo      AboutMongo
-	LanguagesMongo  []LanguagesMongo
-	AuthorsMongo    []AuthorsMongo
-	RepositoryMongo RepositoryMongo
-	FrameworkMongo  FrameworkMongo
+	AboutMongo      AboutMongo       `json:"about,omitempty" bson:"about,omitempty"`
+	LanguagesMongo  []LanguagesMongo `json:"languages,omitempty" bson:"languages,omitempty"`
+	AuthorsMongo    []AuthorsMongo   `json:"authors,omitempty" bson:"authors,omitempty"`
+	RepositoryMongo RepositoryMongo  `json:"repository,omitempty" bson:"repository,omitempty"`
+	FrameworkMongo  FrameworkMongo   `json:"framework,omitempty" bson:"framework,omitempty"`
 }
 
 // **************************************************************************************
