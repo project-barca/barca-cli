@@ -30,11 +30,11 @@ type FrameworkXml struct {
 }
 
 type ProjectXml struct {
-	AboutMongo      AboutMongo       `xml:"about"`
-	LanguagesMongo  []LanguagesMongo `xml:"languages"`
-	AuthorsMongo    []AuthorsMongo   `xml:"authors"`
-	RepositoryMongo RepositoryMongo  `xml:"repository"`
-	FrameworkMongo  FrameworkMongo   `xml:"framework"`
+	AboutXml      AboutXml       `xml:"about"`
+	LanguagesXml  []LanguagesXml `xml:"languages"`
+	AuthorsXml    []AuthorsXml   `xml:"authors"`
+	RepositoryXml RepositoryXml  `xml:"repository"`
+	FrameworkXml  FrameworkXml   `xml:"framework"`
 }
 
 // **************************************************************************************
