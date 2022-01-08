@@ -29,10 +29,17 @@ func GetInfo(fileName string) {
 func CurrentPath(fileName string) string {
 	filedirectory := filepath.Dir(fileName)
 
-	path, err := filepath.Abs(filedirectory)
+	thepath, err := filepath.Abs(filedirectory)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return path
+	return thepath
+}
+
+func GetPermission(fileName string) {
+	info, _ := os.Stat(fileName)
+	mode := info.Mode()
+
+	fmt.Println(fileName, "permissão: ", mode)
 }
