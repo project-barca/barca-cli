@@ -1,7 +1,9 @@
 package file
 
 import (
+	"crypto/sha512"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -10,6 +12,7 @@ import (
 var (
 	fileInfo os.FileInfo
 	err      error
+	files    = make(map[[sha512.Size]byte]string)
 )
 
 func GetInfo(fileName string) {
@@ -42,4 +45,29 @@ func GetPermission(fileName string) {
 	mode := info.Mode()
 
 	fmt.Println(fileName, "permissão: ", mode)
+}
+
+func CheckDuplicate(path string, info os.FileInfo, err error) error {
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	if info.IsDir() { // skip directory
+		return nil
+	}
+	data, err := ioutil.ReadFile(path)
+
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	hash := sha512.Sum512(data) // get the file sha512 hash
+
+	if v, ok := files[hash]; ok {
+		fmt.Printf("%q é uma duplicada de %q\n", path, v)
+	} else {
+		files[hash] = path // store in map for comparison
+	}
+
+	return nil
 }
