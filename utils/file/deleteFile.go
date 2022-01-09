@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"path/filepath"
 )
 
 func RemoveFile(fileName string) {
@@ -86,5 +87,31 @@ func RemoveBigFile(fileName string) {
 	err = os.Remove(targetFile)
 	if err != nil {
 		panic(err)
+	}
+}
+
+func RemoveFilesByExtension(path string, ext string) {
+	dirname := "." + string(filepath.Separator) + path
+
+	d, err := os.Open(dirname)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	defer d.Close()
+
+	files, err := d.Readdir(-1)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for _, file := range files {
+		if file.Mode().IsRegular() {
+			if filepath.Ext(file.Name()) == ext {
+				os.Remove(path + string(filepath.Separator) + file.Name())
+				fmt.Println("Deletado ", file.Name())
+			}
+		}
 	}
 }
