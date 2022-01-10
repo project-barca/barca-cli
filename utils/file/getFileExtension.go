@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 )
 
-func contains(s []string, str string) bool {
+func Contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
 			return true
@@ -17,7 +17,7 @@ func WhatsIsExtension(fileName []string) []string {
 	var extensions []string
 
 	for i := 0; i < len(fileName); i++ {
-		if contains(extensions, filepath.Ext(fileName[i])) != true {
+		if Contains(extensions, filepath.Ext(fileName[i])) != true {
 			extensions = append(extensions, filepath.Ext(fileName[i]))
 		}
 	}

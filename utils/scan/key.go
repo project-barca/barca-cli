@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-func pubKeyDSA(publicKey string) {
+func PubKeyDSA(publicKey string) {
 	//Public key DSA
 	pubKeyFile, err := os.Open(publicKey)
 	if err != nil {
@@ -36,7 +36,7 @@ func pubKeyDSA(publicKey string) {
 	fmt.Printf("Public key Y: %v\n", publickey.Y)
 }
 
-func pubKeyRSA(publicKey string) {
+func PubKeyRSA(publicKey string) {
 	// Public Key RSA
 	publickeyfile, err := os.Open(publicKey)
 	if err != nil {
@@ -58,7 +58,7 @@ func pubKeyRSA(publicKey string) {
 	fmt.Printf("Public key: \n%x\n", publickey)
 }
 
-func privKeyRSA(privateKey string) {
+func PrivKeyRSA(privateKey string) {
 	// Private Key RSA
 	privatekeyfile, err := os.Open(privateKey)
 	if err != nil {
