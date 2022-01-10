@@ -55,3 +55,23 @@ func pubKeyRSA(publicKey string) {
 	publickeyfile.Close()
 	fmt.Printf("Public key: \n%x\n", publickey)
 }
+
+func privKeyRSA(privateKey string) {
+	// Private Key RSA
+	privatekeyfile, err := os.Open(privateKey)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	decoder := gob.NewDecoder(privatekeyfile)
+
+	var privatekey rsa.PrivateKey
+	err = decoder.Decode(&privatekey)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+	privatekeyfile.Close()
+	fmt.Printf("Private Key: \n%x\n", privatekey)
+}
