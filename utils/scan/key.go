@@ -1,9 +1,11 @@
 package scan
 
 import (
+	"bufio"
 	"crypto/dsa"
 	"crypto/rsa"
 	"encoding/gob"
+	"encoding/pem"
 	"fmt"
 	"os"
 )
@@ -74,4 +76,28 @@ func privKeyRSA(privateKey string) {
 	}
 	privatekeyfile.Close()
 	fmt.Printf("Private Key: \n%x\n", privatekey)
+}
+
+func PEMFile(pemFile string) {
+	pemfile, err := os.Open(pemFile)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	// convert pemfile to []byte for decoding
+	pemfileinfo, _ := pemfile.Stat()
+	var size int64 = pemfileinfo.Size()
+	pembytes := make([]byte, size)
+
+	// read pemfile content into pembytes
+	buffer := bufio.NewReader(pemfile)
+	_, err = buffer.Read(pembytes)
+
+	// proper decoding now
+	data, _ := pem.Decode([]byte(pembytes))
+
+	pemfile.Close()
+	fmt.Printf("PEM Type: \n%s\n", data.Type)
+	fmt.Printf("PEM Headers: \n%s\n", data.Headers)
+	fmt.Printf("PEM Bytes: \n%x\n", string(data.Bytes))
 }
