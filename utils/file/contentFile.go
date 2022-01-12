@@ -96,3 +96,13 @@ func ReplaceText(inFile string, oldWord string, newWord string) {
 		os.Exit(1)
 	}
 }
+
+func ConvertToString(inFile string) string {
+	file, err := ioutil.ReadFile(inFile)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// out the file content
+	fmt.Println(string(file))
+	return string(file)
+}
