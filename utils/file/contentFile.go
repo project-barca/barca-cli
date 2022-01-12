@@ -2,6 +2,7 @@ package file
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -79,4 +80,19 @@ func GetNumberLines(path string) int {
 		fmt.Errorf("Error")
 	}
 	return len(lines)
+}
+
+func ReplaceText(inFile string, oldWord string, newWord string) {
+	input, err := ioutil.ReadFile(inFile)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	output := bytes.Replace(input, []byte(oldWord), []byte(newWord), -1)
+
+	if err = ioutil.WriteFile("new-"+inFile, output, 0666); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
