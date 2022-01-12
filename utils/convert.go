@@ -2,6 +2,21 @@ package utils
 
 import "fmt"
 
+type (
+	Celsius    float64
+	Kelvin     float64
+	Fahrenheit float64
+)
+
+const (
+	// standard stuff from Physics
+	// useful for triggering alarms or sequence of actions
+	// to adjust temperature
+	WaterBoilingPoint  Celsius = 100
+	WaterFreezingPoint Celsius = 0
+	AbsoluteZero       Celsius = -273.15
+)
+
 // var lowNames = []string{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"}
 // var tensNames = []string{"twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"}
 // var bigNames = []string{"thousand", "million", "billion"}
@@ -63,9 +78,31 @@ func ConvertNum2Words(num int) string {
 	return s
 }
 
+// ****** TIME CONVERSION  ********
 func SecondsToMinutes(inSeconds int) string {
 	minutes := inSeconds / 60
 	seconds := inSeconds % 60
 	str := fmt.Sprintf("d:d", minutes, seconds)
 	return str
 }
+
+// ****** TIME CONVERSION  ********
+
+// ****** TEMPERATURES CONVERSION  ********
+func CelsiusToFahrenheit(c Celsius) Fahrenheit {
+	return Fahrenheit(c*9/5 + 32)
+}
+
+func CelsiusToKelvin(c Celsius) Kelvin {
+	return Kelvin(c + 273.15)
+}
+
+func KelvinToCelsius(k Kelvin) Celsius {
+	return Celsius(k - 273.15)
+}
+
+func FahrenheitToCelsius(f Fahrenheit) Celsius {
+	return Celsius((f - 32) * 5 / 9)
+}
+
+// ****** TEMPERATURES CONVERSION  ********
