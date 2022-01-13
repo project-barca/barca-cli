@@ -1,6 +1,7 @@
 package file
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
@@ -26,7 +27,20 @@ func SaveXML(fileName string, key interface{}) {
 	enc.Indent("  ", "    ")
 	err = enc.Encode(key)
 	checkError(err)
+}
 
+func SaveCSV(fileName string, key [][]string) {
+	filename := fileName
+	file, err := os.Create(filename)
+	checkError(err)
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+	for _, value := range key {
+		err := writer.Write(value)
+		checkError(err)
+	}
 }
 
 func checkError(err error) {
