@@ -25,7 +25,7 @@ type BaseboardXml struct {
 // **************************************************************************************
 type DriversMongo struct {
 	URL  string `json:"url,omitempty" bson:"url,omitempty"`
-	Name int    `json:"name,omitempty" bson:"name,omitempty"`
+	Name string `json:"name,omitempty" bson:"name,omitempty"`
 	Size int    `json:"size,omitempty" bson:"size,omitempty"`
 }
 type AboutBaseboardMongo struct {
@@ -45,7 +45,7 @@ type BaseboardMongo struct {
 // **************************************************************************************
 type Drivers struct {
 	URL  string
-	Name int
+	Name string
 	Size int
 }
 type AboutBaseboard struct {
