@@ -4,10 +4,11 @@ package entities
 // **************************       XML DATA      ***************************************
 // **************************************************************************************
 type InterfaceXml struct {
-	Name  string `xml:"name"`
-	HAddr string `xml:"hardware_address"`
-	MTU   string `xml:"mtu"`
-	Flag  string `xml:"flag"`
+	Name      string `xml:"name"`
+	HAddr     string `xml:"hardware_address"`
+	MTU       string `xml:"mtu"`
+	Flag      string `xml:"flag"`
+	IsVirtual string `xml:"is_virtual"`
 }
 type BluetoothXml struct {
 	Name    string `xml:"name"`
@@ -29,10 +30,11 @@ type BluetoothMongo struct {
 	MAC     string `json:"mac,omitempty" bson:"mac,omitempty"`
 }
 type InterfaceMongo struct {
-	Name  string `json:"name,omitempty" bson:"name,omitempty"`
-	HAddr string `json:"hardware_address,omitempty" bson:"hardware_address,omitempty"`
-	MTU   string `json:"mtu,omitempty" bson:"mtu,omitempty"`
-	Flag  string `json:"flag,omitempty" bson:"flag,omitempty"`
+	Name      string `json:"name,omitempty" bson:"name,omitempty"`
+	HAddr     string `json:"hardware_address,omitempty" bson:"hardware_address,omitempty"`
+	MTU       string `json:"mtu,omitempty" bson:"mtu,omitempty"`
+	Flag      string `json:"flag,omitempty" bson:"flag,omitempty"`
+	IsVirtual bool   `json:"is_virtual,omitempty" bson:"is_virtual,omitempty"`
 }
 
 type NetworkMongo struct {
@@ -43,10 +45,11 @@ type NetworkMongo struct {
 // **************************************************************************************
 // **************************************************************************************
 type Interface struct {
-	Name  string
-	HAddr string
-	MTU   string
-	Flag  string
+	Name      string
+	HAddr     string
+	MTU       string
+	Flag      string
+	IsVirtual bool
 }
 type Bluetooth struct {
 	Name    string
