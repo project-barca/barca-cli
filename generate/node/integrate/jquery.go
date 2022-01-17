@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"github.com/project-barca/barca-cli/utils/file"
 	"github.com/pterm/pterm"
 	"golang.org/x/text/language"
 )
@@ -48,7 +49,6 @@ func JQuery(directory, lang string) {
 			log.Fatal(errorPath)
 			return
 		}
-
 		f, err := os.Create("./" + directory + "/main.js")
 		if err != nil {
 			log.Fatal(err)
@@ -70,25 +70,27 @@ func JQuery(directory, lang string) {
 
 		pterm.Success.Println(resultJQueryServer)
 	} else {
-		f, err := os.Create("./" + directory + "/main.js")
-		if err != nil {
-			log.Fatal(err)
+		if file.CheckIfExists("./"+directory+"/main.js") != true {
+
+			f, err := os.Create("./" + directory + "/main.js")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			defer f.Close()
+
+			line := "$(document).ready(function() {\n\n});"
+			data := []byte(line)
+
+			_, err2 := f.Write(data)
+			if err2 != nil {
+				log.Fatal(err2)
+			}
+			spinnerSuccess, _ := pterm.DefaultSpinner.Start(resultDownloadModulesJQuery)
+			time.Sleep(time.Second * 5)
+			spinnerSuccess.Success()
+
+			pterm.Success.Println(resultJQueryServer)
 		}
-
-		defer f.Close()
-
-		line := "$(document).ready(function() {\n\n});"
-		data := []byte(line)
-
-		_, err2 := f.Write(data)
-		if err2 != nil {
-			log.Fatal(err2)
-		}
-
-		spinnerSuccess, _ := pterm.DefaultSpinner.Start(resultDownloadModulesJQuery)
-		time.Sleep(time.Second * 5)
-		spinnerSuccess.Success()
-
-		pterm.Success.Println(resultJQueryServer)
 	}
 }
