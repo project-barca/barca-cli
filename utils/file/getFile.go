@@ -1,8 +1,10 @@
 package file
 
 import (
+	"crypto/sha256"
 	"crypto/sha512"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -70,4 +72,19 @@ func CheckDuplicate(path string, info os.FileInfo, err error) error {
 	}
 
 	return nil
+}
+
+func GetHashSHA(fileName string) {
+	f, err := os.Open(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	h := sha256.New()
+	if _, err := io.Copy(h, f); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%x", h.Sum(nil))
 }
