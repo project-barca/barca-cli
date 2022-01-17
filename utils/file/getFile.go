@@ -1,6 +1,7 @@
 package file
 
 import (
+	"crypto/md5"
 	"crypto/sha256"
 	"crypto/sha512"
 	"fmt"
@@ -9,6 +10,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	"golang.org/x/crypto/md4"
 )
 
 var (
@@ -82,6 +85,36 @@ func GetHashSHA(fileName string) {
 	defer f.Close()
 
 	h := sha256.New()
+	if _, err := io.Copy(h, f); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%x", h.Sum(nil))
+}
+
+func GetHashMD5(fileName string) {
+	f, err := os.Open(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	h := md5.New()
+	if _, err := io.Copy(h, f); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%x", h.Sum(nil))
+}
+
+func GetHashMD4(fileName string) {
+	f, err := os.Open(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	h := md4.New()
 	if _, err := io.Copy(h, f); err != nil {
 		log.Fatal(err)
 	}
