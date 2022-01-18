@@ -3,6 +3,7 @@
   "generate_api": "Iniciando Gorilla Mux API...",
   "create_directory_api":  "Criando estrutura de pastas...",
   "create_api_success":  "Projeto construído com sucesso!",
+  "create_serve_jquery_success":  "Projeto jquery construído com sucesso!!",
   "success_package_json":  "criado  :  package.json",
   "success_model_mongodb_express":  "adicionado:   novos modelos para conectar ao MongoDB",
   "success_model_mysql_express_sequelize":  "adicionado:   novos modelos para conectar ao MySQL",
@@ -10,11 +11,15 @@
   "success_server_express":  "criado  :  express.js",
   "success_node_modules":  "criado  :  node_modules/",
   "success_mysql_express":  "integrar  :  integração de Servidor Express com MySQL",
+  "success_functions_javascript":  "adicionado  :  functions em javascript",
+  "success_jquery":  "integrar  :  Integração em Página HTML c/ JQuery",
+  "download_modules_jquery":  "Baixando JQuery v1.+...",
   "install_modules_npm":  "Instalando dependências...",
   "error_modules_npm":  "Erro ao tentar instalar dependências Npm",
   "error_directory_api":  "Já existe uma pasta com o mesmo nome do projeto que você está tentando criar",
   "error_package_json":  "Erro ao tentar adicionar package.json em seu projeto node.js. Provavelmente ainda não existe um projeto Node.js",
+  "error_functions_javascript":  "Erro ao tentar adicionar funcções em seu projeto",
   "error_model_mongo_express":  "Erro ao tentar adicionar modelos em seu projeto Node.js",
   "error_model_mysql_express_sequelize":  "Erro ao tentar adicionar modelos em seu projeto Node.js",
-  "error_mysql_express":  "Erro ao tentar integrar o MySQL em seu projeto em Express.js. Talvez você esteja usando outro ambiente de desenvolvimento."
+  "error_mysql_express":  "Erro ao tentar integrar o MySQL em seu projeto em Express.js. Talvez você esteja usando outro ambiente de desenvolvimento"
 }
