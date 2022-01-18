@@ -4,37 +4,37 @@ package entities
 // **************************       XML DATA      ***************************************
 // **************************************************************************************
 type AboutXml struct {
-	Name        string `xml:"name"`
-	Description string `xml:"description"`
-	Size        string `xml:"size"`
+	Name        string `xml:"Name"`
+	Description string `xml:"Description"`
+	Size        string `xml:"Size"`
 }
 type RepositoryXml struct {
-	Url   string `xml:"url"`
-	Stars int    `xml:"stars"`
-	Fork  int    `xml:"fork"`
+	Url   string `xml:"Url"`
+	Stars int    `xml:"Stars"`
+	Fork  int    `xml:"Fork"`
 }
 type AuthorsXml struct {
-	Name   string `xml:"name"`
-	Email  string `xml:"email"`
-	Github string `xml:"github"`
+	Name   string `xml:"Name"`
+	Email  string `xml:"Email"`
+	Github string `xml:"Github"`
 }
 type LanguagesXml struct {
-	Name string `xml:"name"`
-	Ext  string `xml:"ext"`
-	Docs string `xml:"docs"`
+	Name string `xml:"Name"`
+	Ext  string `xml:"Ext"`
+	Docs string `xml:"Docs"`
 }
 type FrameworkXml struct {
-	Name     string `xml:"name"`
-	Version  string `xml:"version"`
-	Language string `xml:"language"`
+	Name     string `xml:"Name"`
+	Version  string `xml:"Version"`
+	Language string `xml:"Language"`
 }
 
 type ProjectXml struct {
-	AboutXml      AboutXml       `xml:"about"`
-	LanguagesXml  []LanguagesXml `xml:"languages"`
-	AuthorsXml    []AuthorsXml   `xml:"authors"`
-	RepositoryXml RepositoryXml  `xml:"repository"`
-	FrameworkXml  FrameworkXml   `xml:"framework"`
+	AboutXml      AboutXml       `xml:"About"`
+	LanguagesXml  []LanguagesXml `xml:"Languages"`
+	AuthorsXml    []AuthorsXml   `xml:"Authors"`
+	RepositoryXml RepositoryXml  `xml:"Repository"`
+	FrameworkXml  FrameworkXml   `xml:"Framework"`
 }
 
 // **************************************************************************************
