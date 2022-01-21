@@ -93,14 +93,37 @@ func GetVersionModule(path string, module string) string {
 	return version[1]
 }
 
+// Get version of some module composer
+func GetVersionModuleComposer(path string, module string) string {
+	var version []string
+	for i := 0; i < file.GetNumberLines(path+"/composer.json"); i++ {
+		if strings.Contains(file.GetStringLineByIndex(path+"/composer.json", i), "\""+module+"\"") != false {
+			version = strings.Split(file.GetStringLineByIndex(path+"/composer.json", i), ":")
+		}
+	}
+	return version[1]
+}
+
 // Check if exists module npm
 func IfExistsModule(path string, module string) bool {
-	var ifExists bool
+	var res bool
 
 	for i := 0; i < file.GetNumberLines(path+"/package.json"); i++ {
 		if strings.Contains(file.GetStringLineByIndex(path+"/package.json", i), "\""+module+"\"") != false {
-			ifExists = true
+			res = true
 		}
 	}
-	return ifExists
+	return res
+}
+
+// Check if exists module composer
+func IfExistsModuleComposer(path string, module string) bool {
+	var res bool
+
+	for i := 0; i < file.GetNumberLines(path+"/composer.json"); i++ {
+		if strings.Contains(file.GetStringLineByIndex(path+"/composer.json", i), "\""+module+"\"") != false {
+			res = true
+		}
+	}
+	return res
 }
