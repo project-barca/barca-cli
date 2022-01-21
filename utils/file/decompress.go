@@ -66,7 +66,7 @@ func Decompress(inFile string) {
 			fmt.Println("Utilize: barca decompress sourcefile.gzip")
 			os.Exit(1)
 		}
-	case "zlib":
+	case ".zlib":
 		filename := inFile
 
 		if filename == "" {
