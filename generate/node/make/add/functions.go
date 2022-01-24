@@ -98,24 +98,35 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					}
 					defer f.Close()
 
-					firstLine := "function insert" + collection + "() {"
+					firstLine := "function insert" + collection + "() {\n"
 					data := []byte(firstLine)
 
 					_, err2 := f.Write(data)
-
 					if err2 != nil {
 						log.Fatal(err2)
 					}
 
-					line2 := "\n" + inputs[2] + "\n};"
-					data2 := []byte(line2)
-
-					var idx int64 = int64(len(data))
-
-					_, err3 := f.WriteAt(data2, idx)
-					if err3 != nil {
-						log.Fatal(err3)
+					for _, input := range inputs {
+						_, err3 := f.WriteString("  " + input + ",\n")
+						if err3 != nil {
+							log.Fatal(err3)
+						}
 					}
+					f.WriteString("\n")
+					//				var idx int64 = int64(len(data))
+
+					fmt.Print(file.GetNumberLines(path + "/" + collection + ".js"))
+
+					errStr := file.InsertStringToFile(path+"/"+collection+".js", "};", file.GetNumberLines(path+"/"+collection+".js")-1)
+					if errStr != nil {
+						fmt.Printf("Deu erro ao tentar escrever no arquivo")
+					}
+
+					// _, err3 := f.WriteAt(data2, 7)
+					// if err3 != nil {
+					// 	log.Fatal(err3)
+					// }
+
 				}
 
 				pterm.Success.Println(resultSuccessFunctionsJavascript)
