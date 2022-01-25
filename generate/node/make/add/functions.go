@@ -106,27 +106,26 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 						log.Fatal(err2)
 					}
 
-					for _, input := range inputs {
-						_, err3 := f.WriteString("  " + input + ",\n")
-						if err3 != nil {
-							log.Fatal(err3)
+					// Verify paramns input values - start
+					if inputs != nil {
+						var strParamns string
+						for _, input := range inputs {
+							strParamns += input + ", "
+							_, err3 := f.WriteString("  " + input + ",\n")
+							if err3 != nil {
+								log.Fatal(err3)
+							}
 						}
+						f.WriteString("\n")
+
+						errStr := file.InsertStringToFile(path+"/"+collection+".js", "};", file.GetNumberLines(path+"/"+collection+".js")-1)
+						if errStr != nil {
+							log.Fatal(errStr)
+						}
+
+						file.ReplaceString(path+"/"+collection+".js", "insert"+collection+"()", "insert"+collection+"("+strParamns+")")
 					}
-					f.WriteString("\n")
-					//				var idx int64 = int64(len(data))
-
-					fmt.Print(file.GetNumberLines(path + "/" + collection + ".js"))
-
-					errStr := file.InsertStringToFile(path+"/"+collection+".js", "};", file.GetNumberLines(path+"/"+collection+".js")-1)
-					if errStr != nil {
-						fmt.Printf("Deu erro ao tentar escrever no arquivo")
-					}
-
-					// _, err3 := f.WriteAt(data2, 7)
-					// if err3 != nil {
-					// 	log.Fatal(err3)
-					// }
-
+					// Verify paramns input values - end
 				}
 
 				pterm.Success.Println(resultSuccessFunctionsJavascript)
