@@ -64,32 +64,34 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					os.Mkdir(path, 0755)
 				}
 
-				fmt.Print(file.CheckIfExists(path + "/" + collection + ".js"))
 				if file.CheckIfExists(path+"/"+collection+".js") != false {
-					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function insert"+collection+"() {")
-					fmt.Println(indexLineFile)
-					fmt.Println(file.GetNumberLines(path + "/" + collection + ".js"))
+					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function insert"+collection+"(")
 					if indexLineFile == 0 {
-						functiondata := []string{"\nfunction insert" + collection + "() {",
-							"};",
+						functiondata := []string{"\nfunction insert" + collection + "() {"}
+						var strParamns string
+						if inputs != nil {
+							for _, input := range inputs {
+								strParamns += input + ", "
+								functiondata = append(functiondata, "  "+input+",")
+							}
 						}
-						file, err := os.OpenFile(path+"/"+collection+".js", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+						functiondata = append(functiondata, "};")
+
+						fileCurrent, err := os.OpenFile(path+"/"+collection+".js", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 						if err != nil {
 							log.Fatalf("Falha ao tentar modificar o arquivo: %s", err)
 						}
 
-						datawriter := bufio.NewWriter(file)
-
+						datawriter := bufio.NewWriter(fileCurrent)
 						for _, data := range functiondata {
 							_, _ = datawriter.WriteString(data + "\n")
 						}
-
-						log.Println("'function insert" + collection + "()' foi adicionado")
-
 						datawriter.Flush()
-						file.Close()
+						fileCurrent.Close()
+
+						file.ReplaceString(path+"/"+collection+".js", "insert"+collection+"()", "insert"+collection+"("+strParamns+")")
 					} else {
-						fmt.Println("Já existe função para criar")
+						fmt.Println("Já existe está função CREATE")
 					}
 				} else {
 					f, err := os.Create(path + "/" + collection + ".js")
@@ -105,7 +107,6 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					if err2 != nil {
 						log.Fatal(err2)
 					}
-
 					// Verify paramns input values - start
 					if inputs != nil {
 						var strParamns string
@@ -130,6 +131,7 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 
 				pterm.Success.Println(resultSuccessFunctionsJavascript)
 			}
+
 		case "read":
 			localizeConfigErrorModelFunctionsJavacript := i18n.LocalizeConfig{
 				MessageID: "error_functions_javascript",
@@ -149,30 +151,34 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					os.Mkdir(path, 0755)
 				}
 
-				fmt.Print(file.CheckIfExists(path + "/" + collection + ".js"))
 				if file.CheckIfExists(path+"/"+collection+".js") != false {
-					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function read"+collection+"() {")
-					fmt.Println(indexLineFile)
-					fmt.Println(file.GetNumberLines(path + "/" + collection + ".js"))
+					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function read"+collection+"(")
 					if indexLineFile == 0 {
-						functiondata := []string{"\nfunction read" + collection + "() {",
-							"};",
+						functiondata := []string{"\nfunction read" + collection + "() {"}
+						var strParamns string
+						if inputs != nil {
+							for _, input := range inputs {
+								strParamns += input + ", "
+								functiondata = append(functiondata, "  "+input+",")
+							}
 						}
-						file, err := os.OpenFile(path+"/"+collection+".js", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+						functiondata = append(functiondata, "};")
+
+						fileCurrent, err := os.OpenFile(path+"/"+collection+".js", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 						if err != nil {
 							log.Fatalf("Falha ao tentar modificar o arquivo: %s", err)
 						}
 
-						datawriter := bufio.NewWriter(file)
-
+						datawriter := bufio.NewWriter(fileCurrent)
 						for _, data := range functiondata {
 							_, _ = datawriter.WriteString(data + "\n")
 						}
-
 						datawriter.Flush()
-						file.Close()
+						fileCurrent.Close()
+
+						file.ReplaceString(path+"/"+collection+".js", "read"+collection+"()", "read"+collection+"("+strParamns+")")
 					} else {
-						fmt.Println("Já existe função para ler")
+						fmt.Println("Já existe está função READ")
 					}
 				} else {
 					f, err := os.Create(path + "/" + collection + ".js")
@@ -181,28 +187,37 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					}
 					defer f.Close()
 
-					firstLine := "function read" + collection + "() {"
+					firstLine := "function read" + collection + "() {\n"
 					data := []byte(firstLine)
 
 					_, err2 := f.Write(data)
-
 					if err2 != nil {
 						log.Fatal(err2)
 					}
+					// Verify paramns input values - start
+					if inputs != nil {
+						var strParamns string
+						for _, input := range inputs {
+							strParamns += input + ", "
+							_, err3 := f.WriteString("  " + input + ",\n")
+							if err3 != nil {
+								log.Fatal(err3)
+							}
+						}
+						f.WriteString("\n")
 
-					line2 := "\n" + inputs[2] + "\n};"
-					data2 := []byte(line2)
+						errStr := file.InsertStringToFile(path+"/"+collection+".js", "};", file.GetNumberLines(path+"/"+collection+".js")-1)
+						if errStr != nil {
+							log.Fatal(errStr)
+						}
 
-					var idx int64 = int64(len(data))
-
-					_, err3 := f.WriteAt(data2, idx)
-					if err3 != nil {
-						log.Fatal(err3)
+						file.ReplaceString(path+"/"+collection+".js", "read"+collection+"()", "read"+collection+"("+strParamns+")")
 					}
+					// Verify paramns input values - end
 				}
-
 				pterm.Success.Println(resultSuccessFunctionsJavascript)
 			}
+
 		case "delete":
 			localizeConfigErrorModelFunctionsJavacript := i18n.LocalizeConfig{
 				MessageID: "error_functions_javascript",
@@ -222,13 +237,10 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					os.Mkdir(path, 0755)
 				}
 
-				fmt.Print(file.CheckIfExists(path + "/" + collection + ".js"))
 				if file.CheckIfExists(path+"/"+collection+".js") != false {
-					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function delete"+collection+"() {")
-					fmt.Println(indexLineFile)
-					fmt.Println(file.GetNumberLines(path + "/" + collection + ".js"))
+					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function delete"+collection+"(")
 					if indexLineFile == 0 {
-						functiondata := []string{"\nfunction delete" + collection + "() {",
+						functiondata := []string{"\nfunction delete" + collection + "(id) {",
 							"};",
 						}
 						file, err := os.OpenFile(path+"/"+collection+".js", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -237,15 +249,13 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 						}
 
 						datawriter := bufio.NewWriter(file)
-
 						for _, data := range functiondata {
 							_, _ = datawriter.WriteString(data + "\n")
 						}
-
 						datawriter.Flush()
 						file.Close()
 					} else {
-						fmt.Println("Já existe função para excluír")
+						fmt.Println("Já existe está função DELETE")
 					}
 				} else {
 					f, err := os.Create(path + "/" + collection + ".js")
@@ -254,16 +264,15 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					}
 					defer f.Close()
 
-					firstLine := "function delete" + collection + "() {"
+					firstLine := "function delete" + collection + "(id) {\n"
 					data := []byte(firstLine)
 
 					_, err2 := f.Write(data)
-
 					if err2 != nil {
 						log.Fatal(err2)
 					}
 
-					line2 := "\n" + inputs[2] + "\n};"
+					line2 := "id, \n};"
 					data2 := []byte(line2)
 
 					var idx int64 = int64(len(data))
@@ -273,7 +282,6 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 						log.Fatal(err3)
 					}
 				}
-
 				pterm.Success.Println(resultSuccessFunctionsJavascript)
 			}
 		case "update":
@@ -295,30 +303,34 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					os.Mkdir(path, 0755)
 				}
 
-				fmt.Print(file.CheckIfExists(path + "/" + collection + ".js"))
 				if file.CheckIfExists(path+"/"+collection+".js") != false {
-					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function update"+collection+"() {")
-					fmt.Println(indexLineFile)
-					fmt.Println(file.GetNumberLines(path + "/" + collection + ".js"))
+					indexLineFile := file.FindPositionLineText(path+"/"+collection+".js", "function update"+collection+"(")
 					if indexLineFile == 0 {
-						functiondata := []string{"\nfunction update" + collection + "() {",
-							"};",
+						functiondata := []string{"\nfunction update" + collection + "() {"}
+						var strParamns string
+						if inputs != nil {
+							for _, input := range inputs {
+								strParamns += input + ", "
+								functiondata = append(functiondata, "  "+input+",")
+							}
 						}
-						file, err := os.OpenFile(path+"/"+collection+".js", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+						functiondata = append(functiondata, "};")
+
+						fileCurrent, err := os.OpenFile(path+"/"+collection+".js", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 						if err != nil {
 							log.Fatalf("Falha ao tentar modificar o arquivo: %s", err)
 						}
 
-						datawriter := bufio.NewWriter(file)
-
+						datawriter := bufio.NewWriter(fileCurrent)
 						for _, data := range functiondata {
 							_, _ = datawriter.WriteString(data + "\n")
 						}
-
 						datawriter.Flush()
-						file.Close()
+						fileCurrent.Close()
+
+						file.ReplaceString(path+"/"+collection+".js", "update"+collection+"()", "update"+collection+"("+strParamns+")")
 					} else {
-						fmt.Println("Já existe função para atualizar")
+						fmt.Println("Já existe está função UPDATE")
 					}
 				} else {
 					f, err := os.Create(path + "/" + collection + ".js")
@@ -327,24 +339,33 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 					}
 					defer f.Close()
 
-					firstLine := "function update" + collection + "() {"
+					firstLine := "function update" + collection + "() {\n"
 					data := []byte(firstLine)
 
 					_, err2 := f.Write(data)
-
 					if err2 != nil {
 						log.Fatal(err2)
 					}
+					// Verify paramns input values - start
+					if inputs != nil {
+						var strParamns string
+						for _, input := range inputs {
+							strParamns += input + ", "
+							_, err3 := f.WriteString("  " + input + ",\n")
+							if err3 != nil {
+								log.Fatal(err3)
+							}
+						}
+						f.WriteString("\n")
 
-					line2 := "\n" + inputs[2] + "\n};"
-					data2 := []byte(line2)
+						errStr := file.InsertStringToFile(path+"/"+collection+".js", "};", file.GetNumberLines(path+"/"+collection+".js")-1)
+						if errStr != nil {
+							log.Fatal(errStr)
+						}
 
-					var idx int64 = int64(len(data))
-
-					_, err3 := f.WriteAt(data2, idx)
-					if err3 != nil {
-						log.Fatal(err3)
+						file.ReplaceString(path+"/"+collection+".js", "update"+collection+"()", "update"+collection+"("+strParamns+")")
 					}
+					// Verify paramns input values - end
 				}
 
 				pterm.Success.Println(resultSuccessFunctionsJavascript)
