@@ -22,7 +22,7 @@ func init() {
 var localizer *i18n.Localizer
 var bundle *i18n.Bundle
 
-func FunctionJS(lang, directory, collection, database, method string, hidden bool, inputs []string) {
+func FunctionJS(lang, directory, collection, database, method, visibility, types string, hidden bool, inputs []string) {
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.LoadMessageFile("translate/en.json")
@@ -377,7 +377,7 @@ func FunctionJS(lang, directory, collection, database, method string, hidden boo
 
 }
 
-func FunctionPHP(lang, directory, collection, database, method string, hidden bool, inputs []string) {
+func FunctionPHP(lang, directory, collection, database, method, visibility, types string, hidden bool, inputs []string) {
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.LoadMessageFile("translate/en.json")
@@ -732,7 +732,7 @@ func FunctionPHP(lang, directory, collection, database, method string, hidden bo
 
 }
 
-func FunctionRuby(lang, directory, collection, database, method string, hidden bool, inputs []string) {
+func FunctionRuby(lang, directory, collection, database, method, visibility, types string, hidden bool, inputs []string) {
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.LoadMessageFile("translate/en.json")
@@ -1087,7 +1087,7 @@ func FunctionRuby(lang, directory, collection, database, method string, hidden b
 
 }
 
-func FunctionPython(lang, directory, collection, database, method string, hidden bool, inputs []string) {
+func FunctionPython(lang, directory, collection, database, method, visibility, types string, hidden bool, inputs []string) {
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.LoadMessageFile("translate/en.json")
@@ -1439,7 +1439,7 @@ func FunctionPython(lang, directory, collection, database, method string, hidden
 
 }
 
-func FunctionRust(lang, directory, collection, database, method string, hidden bool, inputs []string) {
+func FunctionRust(lang, directory, collection, database, method, visibility, types string, hidden bool, inputs []string) {
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.LoadMessageFile("translate/en.json")
@@ -1794,7 +1794,7 @@ func FunctionRust(lang, directory, collection, database, method string, hidden b
 
 }
 
-func FunctionCplus(lang, directory, collection, database, method string, hidden bool, inputs []string) {
+func FunctionCplus(lang, directory, collection, database, method, visibility, types string, hidden bool, inputs []string) {
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.LoadMessageFile("translate/en.json")
