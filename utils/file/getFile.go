@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 
@@ -120,4 +121,24 @@ func GetHashMD4(fileName string) {
 	}
 
 	fmt.Printf("%x", h.Sum(nil))
+}
+
+// Verifique o tipo de conteúdo do arquivo específicado
+func DetectContentType(fileName string) string {
+	file, err := os.Open(fileName)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	buff := make([]byte, 512)
+	_, err = file.Read(buff)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	filetype := http.DetectContentType(buff)
+
+	return filetype
 }
