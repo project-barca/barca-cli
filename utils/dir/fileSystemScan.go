@@ -39,6 +39,7 @@ func DiskUsage(path string, info os.FileInfo) int64 {
 }
 
 func Scan(path string, f os.FileInfo, err error) error {
+	//fmt.Printf("Coletando %s   |       tamnho:       %d bytes\n", path, f.Size())
 	//fmt.Printf("\n\nArquivo Verificado:     %s\nTamanho do arquivo:     %d bytes\n", path, f.Size())
 	// string to write to file
 	bytes := []byte(path + "\n")
@@ -56,7 +57,6 @@ func Scan(path string, f os.FileInfo, err error) error {
 	} else {
 		return err
 	}
-
 }
 
 func Scanner(directory string) {
@@ -65,5 +65,33 @@ func Scanner(directory string) {
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
+	}
+}
+
+// Find files by extension
+//
+// Example: dir.FilesByExtension("C:\\Windows", "exe")
+func FilesByExt(directory, ext string) {
+	dirname := directory + string(filepath.Separator)
+
+	d, err := os.Open(dirname)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	defer d.Close()
+
+	files, err := d.Readdir(-1)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for _, file := range files {
+		if file.Mode().IsRegular() {
+			if filepath.Ext(file.Name()) == "."+ext {
+				fmt.Println(file.Name())
+			}
+		}
 	}
 }
