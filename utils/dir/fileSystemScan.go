@@ -7,6 +7,7 @@ import (
 	"syscall"
 )
 
+// dir.DiskUsage("/meu/diretorio", ".")
 func DiskUsage(path string, info os.FileInfo) int64 {
 	size := info.Size()
 
@@ -33,7 +34,7 @@ func DiskUsage(path string, info os.FileInfo) int64 {
 		}
 		size += DiskUsage(path+"/"+file.Name(), file)
 	}
-	fmt.Printf("Tamanho em bytes: [%d] : [%s]\n", size, path)
+	// fmt.Printf("Tamanho em bytes: [%d] : [%s]\n", size, path)
 
 	return size
 }
@@ -94,4 +95,21 @@ func FilesByExt(directory, ext string) {
 			}
 		}
 	}
+}
+
+// Convert bytes in MB, GB, TB, PB, EB etc...
+func CalcBytes(bytes int64) (mb, gb, tb, pb, eb int64) {
+	// MegaByte
+	sizeMB := bytes / (1 << (10 * 2))
+	// GigaByte
+	sizeGB := bytes / (1 << (10 * 3))
+	// TeraByte
+	sizeTB := bytes / (1 << (10 * 4))
+	// PetaByte
+	sizePB := bytes / (1 << (10 * 5))
+	// ExaByte
+	sizeEB := bytes / (1 << (10 * 6))
+	// ZettaByte, YottaByte....
+
+	return sizeMB, sizeGB, sizeTB, sizePB, sizeEB
 }
