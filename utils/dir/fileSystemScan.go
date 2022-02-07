@@ -35,8 +35,21 @@ func DiskUsage(path string, info os.FileInfo) int64 {
 		size += DiskUsage(path+"/"+file.Name(), file)
 	}
 	// fmt.Printf("Tamanho em bytes: [%d] : [%s]\n", size, path)
+	var sizeMB, sizeGB, sizeTB, sizePB, sizeEB = CalcBytes(size)
 
-	return size
+	if sizeMB != 0 {
+		return sizeMB
+	} else if sizeGB != 0 {
+		return sizeGB
+	} else if sizeTB != 0 {
+		return sizeTB
+	} else if sizePB != 0 {
+		return sizePB
+	} else if sizeEB != 0 {
+		return sizeEB
+	} else {
+		return size
+	}
 }
 
 func Scan(path string, f os.FileInfo, err error) error {
