@@ -3,6 +3,7 @@ package generate
 import (
 	"bufio"
 	"encoding/json"
+	"fmt"
 	"io"
 	"time"
 
@@ -11,6 +12,8 @@ import (
 
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	write "github.com/project-barca/barca-cli/generate/node/write/js"
+	"github.com/project-barca/barca-cli/generate/py/bottle"
+	"github.com/project-barca/barca-cli/generate/py/flask"
 	"github.com/pterm/pterm"
 	"golang.org/x/text/language"
 )
@@ -40,12 +43,18 @@ func API(lang string, directory string, framework string, port string, projectNa
 	switch framework {
 	case "express":
 		if directory == "" {
-
+			os.Exit(0)
 		}
 		write.ServerExpress(port, directory, lang)
 		os.Remove("./installMod.bat")
-	case "echo":
+	case "flask":
+		flask.Server(port, directory, lang)
 
+		fmt.Print("ok")
+	case "bottle":
+		bottle.Server(port, directory, lang)
+
+		fmt.Print("ok")
 	case "gorilla":
 		if directory == "" {
 		}
