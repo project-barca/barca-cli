@@ -86,7 +86,7 @@ func Server(port string, directory string, lang string) {
 			log.Fatal(err3)
 		}
 		pterm.Success.Println(resultExpressServer)
-		dependencies.PackagePip(directory, "main.py", lang)
+		dependencies.PackagePip(directory, "main.py", lang, "flask")
 		dependencies.AutoInstallPip(directory)
 		//go file.Move(directory, ".bat")
 		curr_wd, err := os.Getwd()
