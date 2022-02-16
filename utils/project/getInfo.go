@@ -2,13 +2,15 @@ package projeto
 
 import (
 	"path/filepath"
+	"strings"
+	"unicode"
 
 	"github.com/project-barca/barca-cli/generate/node/dependencies"
 )
 
 func WhatsIsLanguages(extensions []string) []string {
 	var languages []string
-	increment_json := 0
+
 	increment_xml := 0
 	increment_txt := 0
 	increment_dll := 0
@@ -18,14 +20,20 @@ func WhatsIsLanguages(extensions []string) []string {
 	increment_js := 0
 	increment_java := 0
 	increment_ts := 0
+	increment_rb := 0
+	increment_erb := 0
 	increment_php := 0
 	increment_cs := 0
 	increment_rs := 0
 	increment_c := 0
+	increment_cpp := 0
 	increment_py := 0
 	increment_html := 0
 	increment_css := 0
+	increment_less := 0
+	increment_scss := 0
 	increment_sql := 0
+	increment_md := 0
 	//percent := 100 / len(extensions)
 	for i := 0; i < len(extensions); i++ {
 		switch extensions[i] {
@@ -43,20 +51,30 @@ func WhatsIsLanguages(extensions []string) []string {
 			increment_csproj++
 		case ".c":
 			increment_c++
+		case ".cpp":
+			increment_cpp++
 		case ".rs":
 			increment_rs++
 		case ".py":
 			increment_py++
+		case ".rb":
+			increment_rb++
+		case ".erb":
+			increment_erb++
 		case ".html":
 			increment_html++
+		case ".less":
+			increment_less++
 		case ".css":
 			increment_css++
+		case ".scss":
+			increment_scss++
+		case ".md":
+			increment_md++
 		case ".sql":
 			increment_sql++
 		case ".java":
 			increment_java++
-		case ".json":
-			increment_json++
 		case ".xml":
 			increment_xml++
 		case ".dll":
@@ -72,20 +90,22 @@ func WhatsIsLanguages(extensions []string) []string {
 		"rust":       increment_rs,
 		"go":         increment_go,
 		"c":          increment_c,
+		"c++":        increment_cpp,
 		"c#":         increment_cs,
 		"python":     increment_py,
+		"ruby":       increment_rb,
 		"javascript": increment_js,
 		"typescript": increment_ts,
 		"php":        increment_php,
 		"java":       increment_java,
 		"html":       increment_html,
 		"css":        increment_css,
+		"less":       increment_less,
+		"scss":       increment_scss,
 		"sql":        increment_sql,
 		"dll":        increment_dll,
-		"json":       increment_json,
 		"xml":        increment_xml,
-		"cache":      increment_cache,
-		"csproj":     increment_csproj,
+		"markdown":   increment_md,
 	}
 
 	var key string
@@ -127,19 +147,22 @@ func WhatsIsFrameworks(languages []string, path string) []string {
 	for i := 0; i < len(languages); i++ {
 		switch languages[i] {
 		case "javascript":
-			modules = append(modules, "total", "feather", "loopback", "koa", "sails", "nest", "meteor", "socket", "derby", "express", "adonis", "rapi", "react", "vue", "angular", "bootstrap", "ember")
+			modules = append(modules, "total", "feather", "loopback", "koa", "sails", "nest", "meteor", "socket", "derby", "express", "@adonisjs/framework", "rapi", "react", "vue", "angular", "bootstrap", "ember")
 			for y := 0; y < len(modules); y++ {
-				if dependencies.IfExistsModule(path, modules[y]) == true {
-					frameworks = append(frameworks, modules[y])
+				if dependencies.IfExistsModule(path, languages[i], modules[y]) == true {
+					frameworks = append(frameworks, strings.ToLowerSpecial(unicode.TurkishCase, modules[y]))
 				}
 			}
-
 		case "typescript":
 			modules = append(modules, "express", "nest", "loopback", "feather")
 
 		case "python":
-			modules = append(modules, "django", "flask", "pyramid", "falcon", "cherrypy", "bottle", "web2py", "tornado", "cubicweb", "dash")
-
+			modules = append(modules, "Django", "Flask", "pyramid", "falcon", "cherrypy", "bottle", "web2py", "tornado", "cubicweb", "dash")
+			for y := 0; y < len(modules); y++ {
+				if dependencies.IfExistsModule(path, languages[i], modules[y]) == true {
+					frameworks = append(frameworks, strings.ToLowerSpecial(unicode.TurkishCase, modules[y]))
+				}
+			}
 		case "java":
 			modules = append(modules, "spring", "play", "gwt", "hibernate", "struts", "vaadin", "grails", "jsf", "grails")
 
@@ -147,10 +170,14 @@ func WhatsIsFrameworks(languages []string, path string) []string {
 			modules = append(modules, "gorilla", "echo", "gin", "beego", "fasthttp", "kit", "fiber", "iris")
 
 		case "php":
-			modules = append(modules, "laravel", "symfony", "zend", "phalcon", "cake", "yii", "codeigniter")
-
+			modules = append(modules, "laravel", "php", "symfony", "zend", "phalcon", "cake", "yii", "codeigniter")
+			for y := 0; y < len(modules); y++ {
+				if dependencies.IfExistsModuleComposer(path, modules[y]) == true {
+					frameworks = append(frameworks, strings.ToLowerSpecial(unicode.TurkishCase, modules[y]))
+				}
+			}
 		case "ruby":
-			modules = append(modules, "rubyonrails", "sinatra", "roda", "camping", "cuba", "nancy", "remaze", "ramaze", "goliath", "hanami", "padrinho")
+			modules = append(modules, "rubyonrails", "sinatra-activerecord", "roda", "camping", "cuba", "nancy", "remaze", "ramaze", "goliath", "hanami", "padrinho")
 
 		}
 	}
