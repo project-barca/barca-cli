@@ -212,7 +212,7 @@ func IfExistsModule(path, language, module string) bool {
 			}
 		}
 	case "php":
-		for i := 0; i < file.GetNumberLines(path+"/composer.son"); i++ {
+		for i := 0; i < file.GetNumberLines(path+"/composer.json"); i++ {
 			if strings.Contains(file.GetStringLineByIndex(path+"/composer.json", i), "\""+module+"\"") != false {
 				res = true
 			}
