@@ -170,9 +170,9 @@ func WhatsIsFrameworks(languages []string, path string) []string {
 			modules = append(modules, "gorilla", "echo", "gin", "beego", "fasthttp", "kit", "fiber", "iris")
 
 		case "php":
-			modules = append(modules, "laravel", "php", "symfony", "zend", "phalcon", "cake", "yii", "codeigniter")
+			modules = append(modules, "laravel/framework", "symfony/symfony", "slim/slim", "zend", "phalcon", "cakephp/cakephp", "yii", "codeigniter")
 			for y := 0; y < len(modules); y++ {
-				if dependencies.IfExistsModuleComposer(path, modules[y]) == true {
+				if dependencies.IfExistsModule(path, languages[i], modules[y]) == true {
 					frameworks = append(frameworks, strings.ToLowerSpecial(unicode.TurkishCase, modules[y]))
 				}
 			}
