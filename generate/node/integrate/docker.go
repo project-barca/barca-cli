@@ -116,7 +116,160 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 						log.Fatal(err3)
 					}
 				case "bottle":
-					fmt.Print(e)
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM python:3.9-alpine3.14\n\nCOPY . /var/www/" + directory + "\n\nRUN apk add --no-cache --virtual .build-deps gcc libc-dev make \\\n  && pip install --no-cache-dir -r /var/www/" + directory + "/requirements.txt \\\n && apk del .build-deps gcc libc-dev make\n\nENTRYPOINT python main.py\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "EXPOSE 5000"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "pyramid":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM python:3.9-alpine3.14\n\nCOPY . /var/www/" + directory + "\n\nRUN apk add --no-cache --virtual .build-deps gcc libc-dev make \\\n  && pip install --no-cache-dir -r /var/www/" + directory + "/requirements.txt \\\n && apk del .build-deps gcc libc-dev make\n\nENTRYPOINT python main.py\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "EXPOSE 5000"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "tornado":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM python:3.9-alpine3.14\n\nCOPY . /var/www/" + directory + "\n\nRUN apk add --no-cache --virtual .build-deps gcc libc-dev make \\\n  && pip install --no-cache-dir -r /var/www/" + directory + "/requirements.txt \\\n && apk del .build-deps gcc libc-dev make\n\nENTRYPOINT python main.py\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "EXPOSE 5000"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "cherrypy":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM python:3.9-alpine3.14\n\nCOPY . /var/www/" + directory + "\n\nRUN apk add --no-cache --virtual .build-deps gcc libc-dev make \\\n  && pip install --no-cache-dir -r /var/www/" + directory + "/requirements.txt \\\n && apk del .build-deps gcc libc-dev make\n\nENTRYPOINT python main.py\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "EXPOSE 5000"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "falcon":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM python:3.9-alpine3.14\n\nCOPY . /var/www/" + directory + "\n\nRUN apk add --no-cache --virtual .build-deps gcc libc-dev make \\\n  && pip install --no-cache-dir -r /var/www/" + directory + "/requirements.txt \\\n && apk del .build-deps gcc libc-dev make\n\nWORKDIR /var/www/" + directory + "\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"gunicorn\", \"-b\", \"0.0.0.0:80\", \"main:app\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
 				default:
 					os.Exit(0)
 				}
