@@ -7,10 +7,7 @@ import (
 	"os"
 
 	"github.com/nicksnyder/go-i18n/v2/i18n"
-	scan "github.com/project-barca/barca-cli/scan/environment"
-	"github.com/project-barca/barca-cli/utils/file"
 	projeto "github.com/project-barca/barca-cli/utils/project"
-	"github.com/pterm/pterm"
 
 	"golang.org/x/text/language"
 )
@@ -27,7 +24,7 @@ func contains(s []string, str string) bool {
 
 func Docker(directory, languageProgram, port, host, user, password, lang string, languagesProgram []string) {
 	// Configurações para internacionalização do software
-	var hasNode = scan.EnvironmentNode(directory)
+
 	bundle = i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
 	bundle.LoadMessageFile("translate/en.json")
@@ -275,11 +272,11 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 				}
 				fmt.Print(e)
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "javascript":
-		js := [14]string{"express", "react", "angular", "vue", "ember", "@adonisjs/framework", "rapi", "koa", "meteor", "feather", "sails", "nest", "socket", "derby"}
+		js := [14]string{"react", "express", "angular", "vue", "ember", "@adonisjs/framework", "@hapi/hapi", "koa", "meteor", "feather", "sails", "nest", "socket", "derby"}
 		for _, e := range js {
 			switch contains(projeto.WhatsIsFrameworks(languagesProgram, directory), e) {
 			case true:
@@ -287,8 +284,37 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 				switch e {
 				case "adonis":
 					fmt.Print(e)
-				case "rapi":
-					fmt.Print(e)
+				case "@hapi/hapi":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:lts-alpine\n\nRUN rm -rf /var/cache/apk/*\n\n\nCOPY . /var/www/" + directory + "\n\nENV PORT=8080\n\nRUN npm install\n\nEXPOSE $PORT\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"node\", \"server.js\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
 				case "express":
 					if _, err := os.Stat(path); os.IsNotExist(err) {
 						os.Mkdir(path, 0755)
@@ -301,7 +327,7 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 
 					defer f.Close()
 
-					firstLine := "FROM node:latest\n\nCOPY . /var/www/" + directory + "\n\nENV PORT=3000\n\nRUN npm install\n\nEXPOSE $PORT\n\nENTRYPOINT [\"node\", \"express.js\"]\n\n"
+					firstLine := "FROM node:lts-alpine\n\nCOPY . /var/www/" + directory + "\n\nENV PORT=3000\n\nWORKDIR /var/www/" + directory + "\n\nRUN npm install\n\nEXPOSE $PORT\n\n"
 					data := []byte(firstLine)
 
 					_, err2 := f.Write(data)
@@ -310,7 +336,131 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 						log.Fatal(err2)
 					}
 
-					line2 := "EXPOSE 5000"
+					line2 := "ENTRYPOINT [\"node\", \"express.js\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "feather", "koa":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:lts-alpine\n\nCOPY . /var/www/" + directory + "\n\nENV PORT=3000\n\nRUN npm install\n\nEXPOSE $PORT\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"npm\", \"run\",  \"start\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "react":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:latest\n\nCOPY . /var/www/" + directory + "\n\nWORKDIR /var/www/" + directory + "\n\nENV PATH /var/www/" + directory + "/node_modules/.bin:$PATH\n\nRUN npm install --silent\n\nRUN npm install react-scripts@3.4.1 -g --silent\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"npm\", \"start\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "angular":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:latest\n\nCOPY . /var/www/" + directory + "\n\nWORKDIR  /var/www/" + directory + "\n\nRUN npm install -g @angular/cli\n\nRUN npm install\n\nEXPOSE 4200\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"npm\", \"run\", \"start\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "vue":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:lts-alpine\n\nRUN npm install -g http-server\n\nCOPY . /var/www/" + directory + "\n\nWORKDIR  ./var/www/" + directory + "\n\nENV PORT=3000\n\nRUN npm install\n\nRUN npm run build\n\nEXPOSE $PORT\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"http-server\", \"dist\"]"
 					data2 := []byte(line2)
 
 					var idx int64 = int64(len(data))
@@ -324,7 +474,7 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 					os.Exit(0)
 				}
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "php":
@@ -334,7 +484,7 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 			case true:
 				fmt.Print(e)
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "java":
@@ -344,7 +494,7 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 			case true:
 				fmt.Print(e)
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "go":
@@ -354,7 +504,7 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 			case true:
 				fmt.Print(e)
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "elixir":
@@ -364,7 +514,7 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 			case true:
 				fmt.Print(e)
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "ruby":
@@ -374,7 +524,7 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 			case true:
 				fmt.Print(e)
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "kotlin":
@@ -384,17 +534,17 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 			case true:
 				fmt.Print(e)
 			default:
-				os.Exit(0)
+				continue
 			}
 		}
 	case "c":
-		fmt.Print("Frame C")
+		fmt.Print("C")
 	case "cplusplus":
-		fmt.Print("Frame C++")
+		fmt.Print("C++")
 	case "c#":
-		fmt.Print("Frame C#")
+		fmt.Print("C#")
 	case "rust":
-		fmt.Print("Frame Rust")
+		fmt.Print("Rust")
 	default:
 		localizer = i18n.NewLocalizer(bundle, language.BrazilianPortuguese.String(), language.English.String(), language.French.String())
 	}
@@ -408,66 +558,6 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 		localizer = i18n.NewLocalizer(bundle, language.French.String(), language.English.String(), language.BrazilianPortuguese.String())
 	default:
 		localizer = i18n.NewLocalizer(bundle, language.BrazilianPortuguese.String(), language.English.String(), language.French.String())
-	}
-
-	_, errorPath := os.Stat("./" + directory)
-
-	localizeConfigErrorMySQLExpress := i18n.LocalizeConfig{
-		MessageID: "error_mysql_express",
-	}
-	localizeConfigSuccessMySQLExpress := i18n.LocalizeConfig{
-		MessageID: "success_mysql_express",
-	}
-	resultErrorMySQLExpress, _ := localizer.Localize(&localizeConfigErrorMySQLExpress)
-	resultSuccessMySQLExpress, _ := localizer.Localize(&localizeConfigSuccessMySQLExpress)
-
-	if hasNode == true {
-		indexLineDependencies := file.FindPositionLineText(directory+"/package.json", "dependencies")
-		file.InsertStringToFile(directory+"/package.json", "    \"mysql2\": \"^2.0.2\",\n    \"sequelize\": \"^5.21.2\",\n", indexLineDependencies)
-
-		if os.IsNotExist(errorPath) {
-			pterm.Error.Println(resultErrorMySQLExpress)
-		} else {
-			path := directory + "/config"
-
-			if _, err := os.Stat(path); os.IsNotExist(err) {
-				os.Mkdir(path, 0755)
-			}
-			f, err := os.Create(path + "/Dockerfile")
-
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			defer f.Close()
-
-			firstLine := "module.exports = {\n  HOST:  '" + host + "',\n  USER:  '" + user + "',\n  PASSWORD:  '" + password + "',\n  DB:  '\n"
-			data := []byte(firstLine)
-
-			_, err2 := f.Write(data)
-
-			if err2 != nil {
-				log.Fatal(err2)
-			}
-
-			line2 := "};"
-			data2 := []byte(line2)
-
-			var idx int64 = int64(len(data))
-
-			_, err3 := f.WriteAt(data2, idx)
-
-			if err3 != nil {
-				log.Fatal(err3)
-			}
-
-			pterm.Success.Println(resultSuccessMySQLExpress)
-		}
-	} else {
-		fmt.Print("NO Runtime Node")
-		fmt.Print("NO Runtime Deno")
-		fmt.Print("NO Runtime JDK")
-		fmt.Print("NO Runtime GO...")
 	}
 
 }
