@@ -24,7 +24,6 @@
   <p align="center">
     <img alt="abrir emblema coletivo" src="https://opencollective.com/barca-cli/tiers/sponsor/badge.svg?label=sponsor&color=brightgreen" />
     
-    <object type="image/svg+xml" data="https://opencollective.com/barca-cli/tiers/sponsor.svg?avatarHeight=36&width=600"></object>
     
     <img alt="colaboradores financeiros" src="https://opencollective.com/barca-cli/tiers/badge.svg" />
   </p>
