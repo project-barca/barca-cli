@@ -212,3 +212,8 @@ go run main.go --dbname testdb --host 127.0.0.1 --user root --password 12345 int
 
 <br>
 <br>
+
+## Contribuidores
+
+Caros amigos contribuidores no projeto [contribute](CONTRIBUTING.md).<br>
+<a href="https://github.com/project-barca/barca-cli/graphs/contributors"><img src="https://opencollective.com/barca-cli/contributors.svg?width=890&button=false" /></a>
