@@ -22,6 +22,14 @@
   </p>
    
   <p align="center">
+    <img alt="abrir emblema coletivo" src="https://opencollective.com/barca-cli/tiers/sponsor/badge.svg?label=sponsor&color=brightgreen" />
+    
+    <object type="image/svg+xml" data="https://opencollective.com/barca-cli/tiers/sponsor.svg?avatarHeight=36&width=600"></object>
+    
+    <img alt="colaboradores financeiros" src="https://opencollective.com/barca-cli/tiers/badge.svg" />
+  </p>
+
+  <p align="center">
     <a href="/docs/lang/readme_fr.md">Français </a>
     ·
     <a href="/docs/lang/readme_cn.md">简体中文</a>
@@ -215,5 +223,5 @@ go run main.go --dbname testdb --host 127.0.0.1 --user root --password 12345 int
 
 ## Contribuidores
 
-Caros amigos contribuidores no projeto [contribute](CONTRIBUTING.md).<br>
+Caros amigos(a) contribuidores no projeto <br><br>
 <a href="https://github.com/project-barca/barca-cli/graphs/contributors"><img src="https://opencollective.com/barca-cli/contributors.svg?width=890&button=false" /></a>
