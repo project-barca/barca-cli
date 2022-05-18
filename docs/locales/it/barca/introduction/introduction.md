@@ -1,5 +1,5 @@
 ---
-lang: pt-BR
+lang: it
 title: Introduzione
 tagline: intro
 description: Qualcosa in più sul Progetto Barca
