@@ -1,4 +1,5 @@
 const version = require("./../../package.json").version;
+const { defaultTheme } = require('vuepress')
 
 module.exports = {
   head: [
@@ -65,7 +66,7 @@ module.exports = {
       },
     ],
   ],
-  themeConfig: {
+  theme: defaultTheme({
     docsRepo: 'https://github.com/project-barca/barca-cli',
     docsBranch: 'docs',
     navbar: [
@@ -301,5 +302,8 @@ module.exports = {
     ],
     repoLabel: "Contribute an Example !",
     displayAllHeaders: true
-  },
+  }),
+
+
+
 }
