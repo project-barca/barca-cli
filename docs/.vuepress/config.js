@@ -66,8 +66,8 @@ module.exports = {
     ],
   ],
   themeConfig: {
-    docsRepo: 'https://github.com/project-barca/quickstart',
-    docsBranch: 'main',
+    docsRepo: 'https://github.com/project-barca/barca-cli',
+    docsBranch: 'docs',
     navbar: [
       // DOCS
       {
