@@ -20,30 +20,41 @@ module.exports = {
       title: 'Barca CLI',
       description: 'Ferramenta para criar e personalizar qualquer projeto'
     },
-    '/it/': {
+    '/locales/it/': {
       lang: 'Italiano',
       title: 'Barca CLI',
       description: 'Strumento per creare e personalizzare qualsiasi progetto'
     },
-    '/fr/': {
+    '/locales/fr/': {
       lang: 'Francês',
       title: 'Barca CLI',
       description: "Outil pour créer et personnaliser n'importe quel projet"
     },
-    '/en/': {
-      lang: 'Inglês',
+    '/locales/es/': {
+      lang: 'Espanhol',
+      title: 'Barca CLI',
+      link: '/locales/es/readme.html',
+      description: "Outil pour créer et personnaliser n'importe quel projet"
+    },
+    '/locales/en/': {
+      lang: 'English',
       title: 'Barca CLI',
       description: 'Tool to create and customize any project'
     },
-    '/al/': {
+    '/locales/al/': {
       lang: 'Alemão',
       title: 'Barca CLI',
       description: 'Tool zum Erstellen und Anpassen von Projekten'
     },
-    '/jp/': {
+    '/locales/jp/': {
       lang: 'Japonês',
       title: 'Barca CLI',
       description: 'プロジェクトを作成およびカスタマイズするためのツール'
+    },
+    '/locales/ru/': {
+      lang: 'Russo',
+      title: 'Barca CLI',
+      description: 'Инструмент для создания и настройки любого проекта'
     },
   },
   plugins: [
