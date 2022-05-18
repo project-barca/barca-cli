@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go/firestore v1.6.1 // indirect
 	cloud.google.com/go/storage v1.18.2 // indirect
 	firebase.google.com/go v3.13.0+incompatible // indirect
-	github.com/BurntSushi/toml latest //
+	github.com/BurntSushi/toml v1.1.0 //
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/fatih/color v1.13.0
 	github.com/google/gopacket v1.1.19 // indirect
