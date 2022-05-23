@@ -56,8 +56,42 @@ Das Barca-Ökosystem bringt die neuesten Trends, um Ihr Projekt so zu erstellen 
 
 Barca ist ein Tool, das sowohl in Ihrem speziellen Software- und Infrastrukturprojekt als auch bei der Erstellung eines neuen Projekts verwendet werden kann, um Zeit zu sparen und eine angenehme Arbeitsumgebung zu schaffen, in der Sie arbeiten oder Ihre besten Ideen in die Praxis umsetzen können.
 
+Nach der Installation in Ihrer Umgebung können Sie **Barca** direkt über die Befehlszeile Ihres Betriebssystems ausführen.
 
-<br>
+<br/>
+
+Sehen Sie sich die verfügbaren **Barca CLI**-Befehle an, indem Sie Folgendes eingeben:
+
+
+```
+$ barca --help
+```
+
+<br/>
+
+### Befehlsübersicht
+
+<br/>
+
+Führen Sie `barca <command> --help` aus, um befehlsspezifische Optionen anzuzeigen.
+
+<br/>
+
+Unten können wir die detaillierten Beschreibungen für jeden Befehl erhalten:
+
+
+
+| Befehl        | Alias           | Beschreibung  |
+| ------------- |:-------------:| -----:|
+| `init`      | `i` | Starten Sie ein neues Projekt |
+| `add`      | `a`      |   Fügen Sie dem Projekt eine Ressource hinzu |
+| `insert`      | `is`      |   Features in das Projekt einfügen |
+| `integrate` | `in`      |    Integration mit Technologien |
+| `scan` | `sc`      |    Projekt scannen |
+| `update` | `up`      |    Projekt aktualisieren |
+| `imigrate` | `im`      |    Immigrieren Sie Technologien aus einem Projekt |
+| `deploy` | `d`      |    Implementieren Sie das Projekt |
+
 <br>
 <br>
 <br>

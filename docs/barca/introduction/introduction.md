@@ -56,9 +56,42 @@ O ecossistema Barca traz as últimas tendências para criar e fazer seu projeto 
 
 Barca é uma ferramenta que pode ser utilizada tanto em seu projeto particular de software e infraestrutura quanto gerar um projeto novo com fins de economizar tempo na criação de um ambiente agradável para você trabalhar ou formar suas melhores idéias na prática.
 
+Uma vez instalado em seu ambiente, você pode executar **Barca** diretamente da linha de comando de seu Sistema Operacional. 
 
-<br>
-<br>
+<br/>
+
+Veja os comandos **Barca CLI** disponíveis digitando:
+
+
+```
+$ barca --help
+```
+
+<br/>
+
+### Visão Geral de Comando
+
+<br/>
+
+Execute `barca <comando> --help` para ver as opções específicas do comando.
+
+<br/>
+
+Abaixo podemos obter as descrições detalhadas para cada comando:
+
+
+
+| Comando        | Alias           | Descrição  |
+| ------------- |:-------------:| -----:|
+| `init`      | `i` | Iniciar um novo projeto |
+| `add`      | `a`      |   Adicionar algum recurso no projeto |
+| `insert`      | `is`      |   Inserir funcionalidades no projeto |
+| `integrate` | `in`      |    Fazer integração com tecnologias |
+| `scan` | `sc`      |    Escanear projeto |
+| `update` | `up`      |    Atualizar projeto |
+| `imigrate` | `im`      |    Imigrar tecnologias de um projeto |
+| `deploy` | `d`      |    Fazer implantação do projeto |
+
 <br>
 <br>
 
