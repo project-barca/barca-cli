@@ -55,8 +55,41 @@ El ecosistema del Barça trae las últimas tendencias para crear y hacer tu proy
 
 Barca es una herramienta que se puede utilizar tanto en su proyecto particular de software e infraestructura como en la generación de un nuevo proyecto para ahorrar tiempo en la creación de un entorno agradable para que pueda trabajar o plasmar sus mejores ideas en la práctica.
 
+Una vez instalado en tu entorno, podrás ejecutar **Barca** directamente desde la línea de comandos de tu Sistema Operativo.
 
-<br>
+<br/>
+
+Vea los comandos **Barca CLI** disponibles escribiendo:
+
+```
+$ barca --help
+```
+
+<br/>
+
+### Descripción general del comando
+
+<br/>
+
+Ejecute `barca <comando> --help` para ver las opciones específicas del comando.
+
+<br/>
+
+A continuación podemos obtener las descripciones detalladas de cada comando:
+
+
+
+| Dominio        | Alias           | Descripción  |
+| ------------- |:-------------:| -----:|
+| `init`      | `i` | Iniciar un nuevo proyecto |
+| `add`      | `a`      |   Añadir algún recurso al proyecto. |
+| `insert`      | `is`      |   Insertar características en el proyecto |
+| `integrate` | `in`      |    Integrar con tecnologías |
+| `scan` | `sc`      |    Proyecto de escaneo |
+| `update` | `up`      |    Proyecto de actualización |
+| `imigrate` | `im`      |    Inmigrar tecnologías de un proyecto |
+| `deploy` | `d`      |    Implementar el proyecto |
+
 <br>
 <br>
 <br>
