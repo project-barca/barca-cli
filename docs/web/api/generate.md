@@ -1,7 +1,7 @@
 ---
 lang: pt-BR
-title: Sua Primeira API Rest
-description: Construindo um serviço de REST API para Web em diversos frameworks
+title: Sua Primeira API REST
+description: Construindo um serviço de REST API para Web em diversos tecnologias
 head:
   - - meta
     - name: foo
@@ -17,7 +17,7 @@ next:
   link: /web/api/connect-db.html
 ---
 
-## Gerar API REST para Web
+## Gerar API REST
 
 
 O **Barca CLI** propoem uma diversidade em opções de tecnologias para podermos montar projetos eficientes em pouco tempo, este guia vai nos orientar em como você pode criar muito rápido uma **API REST** utilizando linguagens como *Python*, *Rust*, *Go*, *JavaScript*, *Julia*, *Scala*, PHP, *JAVA*, Elixir e etc.
@@ -47,8 +47,7 @@ Ao começar a usar o `Barca CLI`, você irá desenvolver com uma configuração 
 2. A segunda opção seria usando flags:
   - **--framework**: | selecione o framework
   - **--port**: | define uma porta para seu servidor
-  - **--language**: | define a tradução de linguagem
-  - **--languageProgramm**: | escolha a linguagem de programação
+  - **--lang**: | define o idioma
 ---
 
 <br>
@@ -69,6 +68,13 @@ Abra o terminal e digite:
 barca --framework express --port 5000 init api <nome-de-sua-api>
 ```
 
+<br>
+<br>
+<br>
+
+Especifique a linguagem de idioma que você deseja usar em seu projeto da seguinte forma:
+
+`barca --lang francais --framework express --port 5000 init api <nome-de-sua-api>`
 
 <br>
 
