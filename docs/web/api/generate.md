@@ -1,7 +1,7 @@
 ---
 lang: pt-BR
-title: Sua Primeira API Rest
-description: Construindo um serviço de API para Web em diversos framework rápido e fácil
+title: Sua Primeira API REST
+description: Construindo um serviço de REST API para Web em diversos tecnologias
 head:
   - - meta
     - name: foo
@@ -17,34 +17,46 @@ next:
   link: /web/api/connect-db.html
 ---
 
-# Gerar API REST para Web
+## Gerar API REST
 
-Após instalar o Barca CLI em seu ambiente, vamos gerar nossa primeira **API**.
 
-Barca propoem várias opções em tecnologias para seu projeto, podemos gerar uma **API** em *Python*, *Ruby*, *Javascript* ou *TypeScript*, *Java*, *Rust* e mais.
+O **Barca CLI** propoem uma diversidade em opções de tecnologias para podermos montar projetos eficientes em pouco tempo, este guia vai nos orientar em como você pode criar muito rápido uma **API REST** utilizando linguagens como *Python*, *Rust*, *Go*, *JavaScript*, *Julia*, *Scala*, PHP, *JAVA*, Elixir e etc.
+
 
 <br>
+
+::: tip Dica
+Além do **Barca CLI**, existe mais ferramentas na plataforma [Barca Web Cloud](https://cloud.project-barca.com/tools/overview) que pode ajudar a encontrar algum recurso que você esteja procurando 
+:::
 <br>
 <br>
 
-## Sua Primeira API
+Para obter mais detalhes sobre as ferramentas do Barca, consulte no guia [BWC Tools](https://cloud.barca.com/bwcloud/overview)
+
+## Primeiros passos
+
+<br/>
+
+Ao começar a usar o `Barca CLI`, você irá desenvolver com uma configuração `padrão` e poderá definir as propriedades para montar uma **API** de duas formas:
+
+<br/>
+
+1. A primeira opção seria através do comando `barca setconfig <arquivo> <projeto>` carregar um arquivo com as configurações ideais para seu projeto.
 
 ---
-Configurando:
-  - **--framework**: | selecionar framework
-  - **--port**: | específicar porta para o servidor de escutar
-  - **--language**: | definir tradução de linguagem
-  - **--languageProgramm**: | escolher a linguagem de programação
+2. A segunda opção seria usando flags:
+  - **--framework**: | selecione o framework
+  - **--port**: | define uma porta para seu servidor
+  - **--lang**: | define o idioma
 ---
 
 <br>
 <br>
 <br>
 
-Vamos gerar uma **API** utilizando o framework **express.js** do javascript, depois na linguagem *Python*, *PHP*, *JAVA* e outros.
-<br>
-<br>
-Nesta API decidimos específicar porta para **5000**, por padrão, o Barca utiliza na porta **3000**.
+Vamos montar um projeto básico com [**Barca CLI**](https://docs.project-barca.com/cli/overview) escolhendo uma das linguagens mais utilizadas na Web, o famoso JavaScript.
+
+Nesta **API** decidimos específicar a porta **5000** e o framework **Express.js**, por `padrão` é utilizado a porta **3000**.
 
 <br>
 
@@ -59,32 +71,58 @@ barca --framework express --port 5000 init api <nome-de-sua-api>
 <br>
 <br>
 <br>
-Pronto!
-<br>
-Você já tem uma API em Node.js funcionando<br><br>
-Agora temos o projeto contendo uma estrutura básica de arquivos, pastas e módulos pré-instalados.
+
+Especifique a linguagem de idioma que você deseja usar em seu projeto da seguinte forma:
+
+`barca --lang francais --framework express --port 5000 init api <nome-de-sua-api>`
 
 <br>
+
+Pronto! você já tem uma **API em Node.js** funcionando perfeitamente em seu ambiente
 <br>
-<br>
-<br>
-Entre no caminho do projeto e execute:
+Entre em seu projeto e execute:
 <br>
 <br>
 
 ```sh
-npm start
+npm run start
 ```
 <br>
 Seu servidor será executado no endereço exibido em seu terminal
+
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 
 ## API com Laravel PHP
 
----
+Nesta **API** decidimos específicar a porta **5000** e o framework **Laravel PHP**, por `padrão` é utilizado a porta **3000**.
 
----
+<br>
+
+Abra o terminal e digite:
+
+<br>
+
+```bash
+barca --framework laravel --port 5000 init api <nome-de-sua-api>
+```
+
+
+<br>
+
+Pronto! você já tem uma **API em Laravel PHP +8** funcionando perfeitamente em seu ambiente
+<br>
+Entre em seu projeto e execute:
+<br>
+<br>
+
+```sh
+php artisan server
+```
 
 <br>
 
@@ -126,7 +164,6 @@ Seu servidor será executado no endereço exibido em seu terminal
 
 ## API com Cake PHP
 
-## API com Laravel PHP
 
 
 <!-- relative path -->
