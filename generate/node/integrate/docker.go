@@ -275,6 +275,208 @@ func Docker(directory, languageProgram, port, host, user, password, lang string,
 				continue
 			}
 		}
+	case "typescript":
+		js := [14]string{"react", "express", "angular", "vue", "ember", "@adonisjs/framework", "@hapi/hapi", "koa", "meteor", "feather", "sails", "nest", "socket", "derby"}
+		for _, e := range js {
+			switch contains(projeto.WhatsIsFrameworks(languagesProgram, directory), e) {
+			case true:
+				path := directory
+				switch e {
+				case "adonis":
+					fmt.Print(e)
+				case "@hapi/hapi":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:lts-alpine\n\nRUN rm -rf /var/cache/apk/*\n\n\nCOPY . /var/www/" + directory + "\n\nENV PORT=8080\n\nRUN npm install\n\nEXPOSE $PORT\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"node\", \"server.js\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "express":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:lts-alpine\n\nCOPY . /var/www/" + directory + "\n\nENV PORT=3000\n\nWORKDIR /var/www/" + directory + "\n\nRUN npm install\n\nEXPOSE $PORT\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "ENTRYPOINT [\"node\", \"express.js\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "feather", "koa":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:lts-alpine\n\nCOPY . /var/www/" + directory + "\n\nENV PORT=3000\n\nRUN npm install\n\nEXPOSE $PORT\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"npm\", \"run\",  \"start\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "react":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:latest\n\nCOPY . /var/www/" + directory + "\n\nWORKDIR /var/www/" + directory + "\n\nENV PATH /var/www/" + directory + "/node_modules/.bin:$PATH\n\nRUN npm install --silent\n\nRUN npm install react-scripts@3.4.1 -g --silent\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"npm\", \"start\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "angular":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:latest\n\nCOPY . /var/www/" + directory + "\n\nWORKDIR  /var/www/" + directory + "\n\nRUN npm install -g @angular/cli\n\nRUN npm install\n\nEXPOSE 4200\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"npm\", \"run\", \"start\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				case "vue":
+					if _, err := os.Stat(path); os.IsNotExist(err) {
+						os.Mkdir(path, 0755)
+					}
+					f, err := os.Create(path + "/Dockerfile")
+
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					defer f.Close()
+
+					firstLine := "FROM node:lts-alpine\n\nRUN npm install -g http-server\n\nCOPY . /var/www/" + directory + "\n\nWORKDIR  ./var/www/" + directory + "\n\nENV PORT=3000\n\nRUN npm install\n\nRUN npm run build\n\nEXPOSE $PORT\n\n"
+					data := []byte(firstLine)
+
+					_, err2 := f.Write(data)
+
+					if err2 != nil {
+						log.Fatal(err2)
+					}
+
+					line2 := "CMD [\"http-server\", \"dist\"]"
+					data2 := []byte(line2)
+
+					var idx int64 = int64(len(data))
+
+					_, err3 := f.WriteAt(data2, idx)
+
+					if err3 != nil {
+						log.Fatal(err3)
+					}
+				default:
+					os.Exit(0)
+				}
+			default:
+				continue
+			}
+		}
 	case "javascript":
 		js := [14]string{"react", "express", "angular", "vue", "ember", "@adonisjs/framework", "@hapi/hapi", "koa", "meteor", "feather", "sails", "nest", "socket", "derby"}
 		for _, e := range js {
