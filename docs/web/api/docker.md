@@ -14,30 +14,30 @@ head:
 
 # Adicionar Docker
 
-
-Para conectar sua API com um serviço de Banco de Dados é bem simples, vamos precisar de especificar algumas das opções abaixo:
-
----
-Configurando:
-  - **--user**: | especificar o usuário
-  - **--password**: | específicar porta para o servidor de escutar
-  - **--dbname**: | definir tradução de linguagem
----
-
-<br>
-<br>
-
-Agora vamos digitar o comando abaixo para conectar:
-
+Para integrar [Docker](https://github.com/project-barca) em seu projeto é muito simples, basta digitar o comando seguinte com o nome do diretório aonde o aplicativo se encontra:
 ```sh
-barca --user root --password 12345 --dbname "test" integrate <database> <diretorio>
+ barca integrate docker <nome-do-projeto>
 ```
+<br/>
+
+Você pode utilizar algumas das configurações abaixo para uma melhor experiência em seu projeto docker:
+
+
+
+| Comando        | Descrição                                          |
+| ------------- |:---------------------------------------------------:|
+| **--user**      |especificar o usuário root do container (opcional) |
+| **--password**      |específicar a senha do usuário (opcional)|
+| **--port** |específicar porta do container Docker (opcional)|
+| **--version**      |definir a versão para o ambiente (opcional) |
+| **--remote**      |denifir recurso remoto (opcional) |
+| **--cert**      |envio de certificado digital para comunicação segura (opcional) |
+| **--dbname** |definir banco de dados (opcional)|
+
 
 <br>
 <br>
-Pronto!
-<br>
-Seu projeto adquiriu conexão
+
 
 <br>
 <br>
