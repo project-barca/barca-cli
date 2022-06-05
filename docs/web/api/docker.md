@@ -15,14 +15,21 @@ head:
 # Adicionar Docker
 
 Para integrar [Docker](https://github.com/project-barca) em seu projeto é muito simples, basta digitar o comando seguinte com o nome do diretório aonde o aplicativo se encontra:
+
+<br/>
+<br/>
+
 ```sh
  barca integrate docker <nome-do-projeto>
 ```
+
+<br/>
+<br/>
 <br/>
 
-Você pode utilizar algumas das configurações abaixo para uma melhor experiência em seu projeto docker:
+Você pode utilizar algumas das configurações abaixo para ter uma melhor experiência:
 
-
+<br/>
 
 | Comando        | Descrição                                          |
 | ------------- |:---------------------------------------------------:|
